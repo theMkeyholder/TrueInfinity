@@ -23,6 +23,6 @@ function load() {
 }
 
 function init() {
-	if (!load()) {
-	}
+	// if (!load()) {
+	// }
 }
