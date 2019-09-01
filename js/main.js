@@ -7,7 +7,7 @@ function save() {
 function wipe() {
 	if (confirm('Do you want to delete ALL of your progress?!?')) {
 		delete localStorage['save'];
-		setup();
+		game = new Game();
 		save();
 	}
 }
@@ -23,6 +23,15 @@ function load() {
 }
 
 function init() {
-	// if (!load()) {
-	// }
+	if (!load()) {
+		game = new Game();
+		//save();
+	}
+
+	setInterval(gameLoop, 50);
+}
+
+function gameLoop() {
+	//save();
+	setElems();
 }
