@@ -23,6 +23,10 @@ html, body {
 	height: 100vh;
 }
 
+small {
+	font-size: small;
+}
+
 #topbar {
 	width: 100%;
 	height: 30px;
@@ -51,6 +55,36 @@ html, body {
 	transition: width 1s;
 }
 
-#sidebar:hover + #main{
+#sidebar:hover + #main {
 	width: 67vw
+}
+
+#antimattersidebar {
+	width: 100%;
+	font-size: 20px;
+	display: inline-block;
+	text-align: center;
+}
+
+.sbb {
+	width: 100%;
+	height: 40px;
+	border-width: 5px;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+.sbb.grey {
+	background-color: darkgrey;
+	border-color: grey;
+}
+
+.sbb.blue {
+	background-color: mediumslateblue;
+	border-color: #392759;
+}
+
+.sbb.red {
+	background-color: pink;
+	border-color: darkred;
 }

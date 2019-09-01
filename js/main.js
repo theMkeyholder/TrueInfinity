@@ -8,6 +8,7 @@ function wipe() {
 	if (confirm('Do you want to delete ALL of your progress?!?')) {
 		delete localStorage['save'];
 		game = new Game();
+		game.init();
 		save();
 	}
 }
@@ -15,7 +16,8 @@ function wipe() {
 // Retrieve your data from the depths of the localStorage variable...
 function load() {
 	if (localStorage.getItem('save') != undefined && localStorage.getItem('save') != 'undefined' && localStorage.getItem('save') != null) {
-		game = new Game(JSON.parse(localStorage.getItem('save')));
+		game = new Game();
+		game.init(JSON.parse(localStorage.getItem('save')));
 		return true;
 	} else {
 		return false;
@@ -23,8 +25,10 @@ function load() {
 }
 
 function init() {
+	sbht = 0;
 	if (!load()) {
 		game = new Game();
+		game.init();
 		//save();
 	}
 
