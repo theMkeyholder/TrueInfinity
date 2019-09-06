@@ -1,6 +1,10 @@
 // Chuck your data into the depths of the localStorage variable...
 function save() {
 	localStorage.setItem('save', JSON.stringify(game));
+
+	if (game.autosave) {
+		setTimeout(save, 1000 * game.autosaveintv);
+	}
 }
 
 // Clear the save file
@@ -8,7 +12,7 @@ function wipe() {
 	if (confirm('Do you want to delete ALL of your progress?!?')) {
 		delete localStorage['save'];
 		game = new Game();
-		game.init();
+		ftl();
 		save();
 	}
 }
@@ -17,7 +21,7 @@ function wipe() {
 function load() {
 	if (localStorage.getItem('save') != undefined && localStorage.getItem('save') != 'undefined' && localStorage.getItem('save') != null) {
 		game = new Game();
-		game.init(JSON.parse(localStorage.getItem('save')));
+		loadSave(JSON.parse(localStorage.getItem('save')))
 		return true;
 	} else {
 		return false;
@@ -28,14 +32,19 @@ function init() {
 	sbht = 0;
 	if (!load()) {
 		game = new Game();
-		game.init();
-		//save();
+		ftl();
 	}
-
+	save();
+	document.getElementById('asintv').value = game.autosaveintv;
 	setInterval(gameLoop, 50);
 }
 
 function gameLoop() {
-	//save();
 	setElems();
+	game.time++;
+	game.autosaveintv = document.getElementById('asintv').value;
+	updatePrestiges();
+	for (let i in game.prestige) {
+		game.prestige[i].updandgen();
+	}
 }
