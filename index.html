@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>	
+		<title>True Infinity</title>
+		
+		<link rel='stylesheet' href='css/stylesheet.css' />
+		
+		<script src='js/OmegaNum/OmegaNum.js'></script>
+		<script src='js/main.js'></script>
+		<script src='js/game.js'></script>
+		<script src='js/loadSave.js'></script>
+		<script src='js/setElem.js'></script>
+		<script src='js/createElems.js'></script>
+		<script src='js/helper.js'></script>
+		<script src='js/formatNum.js'></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146664738-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-146664738-1');
+		</script>
+	</head>
+	
+	<body onload='switchToSection(0);'>
+		<div id='game'>
+			<div id='topbar'>
+			</div>
+			
+			<div id='sidebar'>
+				<p id='antimattersidebar'></p><br><br>
+				<div id='buttons'>
+					<button class='sbb grey' onclick='switchToSection(0);'>Dimensions</button>
+					<button class='sbb blue' onclick='switchToSection(1);'>Statistics</button>
+					<button class='sbb green' onclick='switchToSection(2);'>Options</button>
+					<button class='sbb red' onclick='switchToSection(3);'>Achievements</button>
+				</div>
+			</div>
+			
+			<div id='main'>
+				<div id='s0' class='section'>
+					<!-- Dimensions -->
+					<div id='lw'>
+					</div>
+				</div>
+				
+				<div id='s1' class='section'>
+					<!-- Statistics -->
+				</div>
+				
+				<div id='s2' class='section'>
+					<!-- Options -->
+					<button class='sbb green' onclick='save()'>Save</button>
+					<button class='sbb blue' onclick='toggleas()' id='asbutton'>Autosave: Enabled</button>
+					<p id='asp'>Autosave every <input id='asintv'></input> seconds.</p>
+					<br><br>
+					<button class='sbb red' onclick='wipe()'>Hard Reset</button>
+				</div>
+				
+				<div id='s3' class='section'>
+					<!-- Achievements -->
+				</div>
+			</div>
+		</div>
+		<script>
+			let game;
+			let sbht;
+			init();
+		</script>
+	</body>
+</html>
