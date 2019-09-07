@@ -6,7 +6,7 @@ function loadSave(data) {
 		game.autosave = true;
 	}
 	game.autosaveintv = data.autosaveintv || 10;
-
+	
 	if (data.prestige) {
 		for (let pn in data.prestige) {
 			let p = data.prestige[pn];

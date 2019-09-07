@@ -1,7 +1,7 @@
 // Chuck your data into the depths of the localStorage variable...
 function save() {
 	localStorage.setItem('save', JSON.stringify(game));
-
+	
 	if (game.autosave) {
 		setTimeout(save, 1000 * game.autosaveintv);
 	}
@@ -36,7 +36,7 @@ function init() {
 	}
 	save();
 	document.getElementById('asintv').value = game.autosaveintv;
-	setInterval(gameLoop, 50);
+	setInterval(gameLoop, 50);	
 }
 
 function gameLoop() {

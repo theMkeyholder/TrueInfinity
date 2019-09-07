@@ -1,18 +1,18 @@
 function createPrestige(loc) {
 	let p = createDiv('lw', 'p' + loc);
 	p.className = 'prestige';
-
+	
 	let rb = createDiv('p' + loc, 'rb' + loc);
 	rb.className = 'resBox';
 	let r = createDiv('rb' + loc, 'r' + loc);
 	r.className = 'r';
-
+	
 	let b = createElem('p' + loc, 'b' + loc, 'BUTTON');
 	b.className = 'sbb green maxall';
 	b.innerHTML = 'Max All';
 	b.onclick = function() {game.prestige[loc].maxAll()};
-
-	let gb = createDiv('p' + loc, 'gb' + loc);
+	
+	let gb = createDiv('p' + loc, 'gb' + loc); 
 	gb.className = 'genBox';
 }
 
