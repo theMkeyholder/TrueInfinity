@@ -23,6 +23,11 @@ html, body {
 	height: 100vh;
 }
 
+hr {
+	margin: 0;
+	padding: 0;
+}
+
 *:focus {
     outline: none;
 }
@@ -41,7 +46,7 @@ html, body {
 }
 
 #sidebar {
-	width: 15vw;
+	width: 25vw;
 	height: calc(100vh - 30px);
 	background-color: lightgrey;
 	float: left;
@@ -53,11 +58,11 @@ html, body {
 }
 
 #sidebar:hover {
-	width: 25vw;
+	width: 40vw;
 }
 
 #main {
-	width: 85vw;
+	width: 75vw;
 	height: calc(100vh - 30px);
 	background-color: darkgrey;
 	float: right;
@@ -67,13 +72,15 @@ html, body {
 }
 
 #sidebar:hover + #main {
-	width: 75vw
+	width: 60vw
 }
 
 #antimattersidebar {
 	width: 100%;
 	display: inline-block;
 	text-align: center;
+	word-break: break-all;
+	white-space: normal;
 }
 
 #antimattersidebar small {
@@ -120,31 +127,36 @@ html, body {
 
 .resBox {
 	width: 200px;
+	max-width: 200px;
 	height: 80px;
 	background-color: #C5C5C5;
-	line-height: 80px;
 }
 
 .resBox p {
 	display: inline-block;
 	vertical-align: middle;
-	line-height: normal;
 }
 
 .r {
 	height: 80px;
+	white-space: normal;
 }
 
 .genBox {
 	width: 200px;
-	height: calc(100% - 100px);
+	height: calc(100vh - 155px);
+	/* height: calc(100% - 80px); */
 	background-color: #B8B8B8;
 	overflow-y: auto;
 }
 
 .gen {
-	height: 120px;
 	background-color: lightgrey;
+	min-height: 80px;
+	max-height: 120px;
+	height: auto;
+	white-space: normal;
+	visibility: hidden;
 }
 
 .sbb {
@@ -159,15 +171,16 @@ html, body {
 
 .sbb.half {
 	width: 50%;
+	height: 30px;
 }
 
-/* .sbb.nochange:hover { */
-	/* height: 38px; */
-/* } */
+.sbb.nochange:hover {
+	height: 28px;
+}
 
-/* .sbb.nochange:active { */
-	/* height: 35px; */
-/* } */
+.sbb.nochange:active {
+	height: 25px;
+}
 
 .sbb:hover:not(.nochange) {
 	width: 98%;
@@ -200,4 +213,8 @@ html, body {
 .sbb.brown {
 	background-color: #513C2C;
 	border-color: #28190E;
+}
+
+.sbb.maxall {
+
 }

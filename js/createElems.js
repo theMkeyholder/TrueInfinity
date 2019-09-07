@@ -7,6 +7,11 @@ function createPrestige(loc) {
 	let r = createDiv('rb' + loc, 'r' + loc);
 	r.className = 'r';
 
+	let b = createElem('p' + loc, 'b' + loc, 'BUTTON');
+	b.className = 'sbb green maxall';
+	b.innerHTML = 'Max All';
+	b.onclick = function() {game.prestige[loc].maxAll()};
+
 	let gb = createDiv('p' + loc, 'gb' + loc);
 	gb.className = 'genBox';
 }
@@ -51,6 +56,13 @@ function createDiv(parentId, thisId) {
 	div.id = thisId;
 	document.getElementById(parentId).appendChild(div);
 	return div;
+}
+
+function createElem(parentId, thisId, type) {
+	let elem = document.createElement(type);
+	elem.id = thisId
+	document.getElementById(parentId).appendChild(elem);
+	return elem;
 }
 
 function removeDiv(thisId) {

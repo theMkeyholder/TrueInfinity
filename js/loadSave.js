@@ -1,8 +1,12 @@
 function loadSave(data) {
 	game.time = data.time || 0;
-	game.autosave = data.autosave || true;
+	if (typeof data.autosave == 'boolean') {
+		game.autosave = data.autosave;
+	} else {
+		game.autosave = true;
+	}
 	game.autosaveintv = data.autosaveintv || 10;
-	
+
 	if (data.prestige) {
 		for (let pn in data.prestige) {
 			let p = data.prestige[pn];
