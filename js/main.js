@@ -39,6 +39,8 @@ function init() {
 	setInterval(gameLoop, 50);
 }
 
+let timer = 0;
+
 function gameLoop() {
 	setElems();
 	game.time++;
@@ -46,5 +48,11 @@ function gameLoop() {
 	updatePrestiges();
 	for (let i in game.prestige) {
 		game.prestige[i].updandgen();
+	}
+	// console.log(d(game.prestige['[0]'].power))
+	timer++
+	if (timer >= 1000) {
+		timer = 0;
+		console.clear();
 	}
 }

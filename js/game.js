@@ -5,6 +5,7 @@ class Game {
 		this.autosaveintv = 10;
 
 		this.prestige = {};
+		this.maxPrestigeLayer = '[0]';
 	}
 }
 
@@ -33,7 +34,6 @@ class PrestigeLayer {
 			}
 		}
 
-		// console.log(
 		if (this.generators[this.generators.length - 1].amount.gte(1)) {
 			this.generators.push(new Generator(0, 0, this.generators[this.generators.length - 1].dim.add(1), this.loc));
 		}
@@ -64,8 +64,15 @@ class PrestigeLayer {
 			}
 		} else {
 			this.incPower(this.generators[0].amount.mul(this.generators[0].mult).div(20));
-			let x = OmegaNum.choose(new OmegaNum(this.tslp).div(20).mul(this.generators[1].dim).mul(this.generators[1].mult).mul(this.generators[1].amount.pow(2)), this.generators[1].dim).pow(0.4);
-			this.incGen(0, x);
+			let y = new OmegaNum(this.tslp).div(20).mul(this.generators[1].dim).mul(this.generators[1].mult).mul(this.generators[1].amount);
+			let z = this.generators[1].dim;
+			let x = OmegaNum.choose(y, z).pow(0.4);
+			if (x.lt(1e3)) {
+				let w = y.factorial();
+				this.incGen(0, w);
+			} else {
+				this.incGen(0, x);
+			}
 		}
 	}
 
@@ -80,18 +87,19 @@ class PrestigeLayer {
 		}
 
 		let MSI = 9007199254740991;
-		if (this.loc = '[0]') {
+		if (this.loc == '[0]') {
 			let exp = this.power.log10();
 			let fexp;
-			if (exp.toNumber > MSI) {
+			if (exp.toNumber() > MSI) {
 				fexp = exp;
 			} else {
 				fexp = new OmegaNum(Math.floor(exp.toNumber()));
 			}
-			if (this.power.gte(OmegaNum.pow(fexp.lt(98) ? 10 : fexp.div(5), this.generators[this.generators.length - 1].dim.add(2))) && this.state == 1) {
-				this.generators.push(new Generator(1, 1, fexp, this.loc));
-				this.power = this.power.sub(OmegaNum.pow(fexp.lt(100) ? 10 : fexp.div(5), fexp));
+			if (this.state == 1 && this.generators[this.generators.length - 1].dim.lt(fexp.sub(1))) {
+				this.generators.push(new Generator(1, 1, fexp.sub(1), this.loc));
+				this.incPower(fexp.sub(1).neg());
 			}
+
 		} else {
 			let exp = this.points.log10();
 			let fexp;
@@ -100,11 +108,32 @@ class PrestigeLayer {
 			} else {
 				fexp = new OmegaNum(Math.floor(exp.toNumber()));
 			}
-			if (this.points.gte(OmegaNum.pow(fexp.lt(98) ? 10 : fexp.div(5), this.generators[this.generators.length - 1]).dim.add(2)) && this.state == 1) {
+			if (this.points.gte(OmegaNum.pow(fexp.lt(98) ? 10 : fexp.div(5), this.generators[this.generators.length - 1].dim.add(2))) && this.state == 1) {
 				this.generators.push(new Generator(1, 1, fexp, this.loc));
-				this.points = this.points.sub(OmegaNum.pow(fexp.lt(100) ? 10 : fexp.div(5), fexp));
 			}
 		}
+	}
+
+	prestige() {
+		let JSloc = JSON.parse(this.loc);
+		JSloc[0]++;
+		let newloc = JSON.stringify(JSloc);
+		if (this.loc == game.maxPrestigeLayer) {
+			game.maxPrestigeLayer = newloc;
+			game.prestige[newloc] = new PrestigeLayer(newloc, (this.loc == '[0]' ? this.power : this.points).logBase(new OmegaNum(1.79e308)).floor().mul(10), 0, [new Generator(0, 0, 0, newloc)], 0, 0);
+		} else {
+			game.prestige[newloc].points = game.prestige[newloc].points.add((this.loc == '[0]' ? this.power : this.points).logBase(new OmegaNum(1.79e308)).floor().mul(10));
+		}
+
+		this.points = num(0);
+		if (this.loc == '[0]') {
+			this.power = num(100);
+		} else {
+			this.power = num(0);
+		}
+		this.generators = [new Generator(0, 0, 0, this.loc)];
+		this.tslp = 0;
+		this.state = 0;
 	}
 }
 
@@ -122,11 +151,24 @@ class Generator {
 	}
 
 	get mult() {
-		return OmegaNum.pow(2, this.bought);
+		let mpl= game.maxPrestigeLayer;
+		let arr = JSON.parse(mpl);
+		let n = arr[0];
+		let JSloc = JSON.parse(this.loc);
+		let n2 = JSloc[0];
+		let pow = new OmegaNum(1);
+		while (n > n2) {
+			let x = arr;
+			x[0] = n;
+			let jx = JSON.stringify(x);
+			pow = pow.mul(game.prestige[jx].power.pow(new OmegaNum(n).sub(n2)).add(1));
+			n--;
+		}
+		return OmegaNum.pow(2, this.bought).mul(pow);
 	}
 
 	get canAfford() {
-		if (this.loc = '[0]') {
+		if (this.loc == '[0]') {
 			return game.prestige[this.loc].power.gte(this.price);
 		} else {
 			return game.prestige[this.loc].points.gte(this.price);
@@ -134,7 +176,7 @@ class Generator {
 	}
 
 	get maxAfford() {
-		if (this.loc = '[0]') {
+		if (this.loc == '[0]') {
 			if (!game.prestige[this.loc].power.lt(this.price)) {
 				return OmegaNum.affordGeometricSeries(game.prestige[this.loc].power, this.baseprice, OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim.div(5), this.dim.add(1)), this.bought);
 			} else {
@@ -155,10 +197,10 @@ class Generator {
 
 	buy() {
 		if (this.canAfford) {
-			if (this.loc = '[0]') {
-				game.prestige[this.loc].power = game.prestige[this.loc].power.sub(this.price);
+			if (this.loc == '[0]') {
+				game.prestige[this.loc].incPower(this.price.neg());
 			} else {
-				game.prestige[this.loc].points = game.prestige[this.loc].points.sub(this.price);
+				game.prestige[this.loc].incPoints(this.price.neg());
 			}
 			this.amount = this.amount.add(1);
 			this.bought = this.bought.add(1);
@@ -170,13 +212,17 @@ class Generator {
 
 	buyMax() {
 		if (this.maxAfford.gt(0)) {
-			let cfm = this.costForMax
+			let cfm = this.costForMax;
 			this.amount = this.amount.add(this.maxAfford);
 			this.bought = this.bought.add(this.maxAfford);
-			if (this.loc = '[0]') {
-				game.prestige[this.loc].power = game.prestige[this.loc].power.sub(cfm);
+			if (this.loc == '[0]') {
+				if (game.prestige[this.loc].power.lt('e9007199254740991')) {
+					game.prestige[this.loc].incPower(cfm.neg());
+				}
 			} else {
-				game.prestige[this.loc].points = game.prestige[this.loc].points.sub(cfm);
+				if (game.prestige[this.loc].points.lt('e9007199254740991')) {
+					game.prestige[this.loc].incPoints(cfm.neg());
+				}
 			}
 		}
 	}

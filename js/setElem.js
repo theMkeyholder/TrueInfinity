@@ -25,7 +25,8 @@ function setElems() {
 		if (i == '[0]') {
 			setElem('r' + i, `You have ${d(game.prestige[i].power)} antimatter`);
 		} else {
-			setElem('r' + i, `You have ${d(game.prestige[i].power)} power`);
+			setElem('r' + i, `You have ${d(game.prestige[i].points)} points
+							<br>You have ${d(game.prestige[i].power)} power`);
 		}
 		for (let k in game.prestige[i].generators) {
 			let j = game.prestige[i].generators[k];

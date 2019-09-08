@@ -45,6 +45,10 @@ hr {
     position: fixed;
 }
 
+#topbar p {
+	line-height: 30px;
+}
+
 #sidebar {
 	width: 25vw;
 	height: calc(100vh - 30px);
@@ -138,7 +142,7 @@ hr {
 }
 
 .r {
-	height: 80px;
+	height: 40px;
 	white-space: normal;
 }
 

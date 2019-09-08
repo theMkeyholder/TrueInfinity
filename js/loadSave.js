@@ -17,4 +17,5 @@ function loadSave(data) {
 			game.prestige[p.loc] = new PrestigeLayer(p.loc, num(p.points), num(p.power), gens, p.tslmd, p.state);
 		}
 	}
+	game.maxPrestigeLayer = data.maxPrestigeLayer || '[0]';
 }
