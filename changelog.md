@@ -1,3 +1,8 @@
+## pre-α0.5
+* Prestige system
+* (Bad code) => {lag}
+* Starting over();
+
 ## pre-α0.4
 * Normal dimensions
 * No floating point errors
