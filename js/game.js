@@ -33,7 +33,7 @@ class PrestigeLayer {
 				let removed = this.generators.splice(1, 1);
 			}
 		}
-
+		
 		if (this.generators[this.generators.length - 1].amount.gte(1)) {
 			this.generators.push(new Generator(0, 0, this.generators[this.generators.length - 1].dim.add(1), this.loc));
 		}
@@ -64,15 +64,8 @@ class PrestigeLayer {
 			}
 		} else {
 			this.incPower(this.generators[0].amount.mul(this.generators[0].mult).div(20));
-			let y = new OmegaNum(this.tslp).div(20).mul(this.generators[1].dim).mul(this.generators[1].mult).mul(this.generators[1].amount);
-			let z = this.generators[1].dim;
-			let x = OmegaNum.choose(y, z).pow(0.4);
-			if (x.lt(1e3)) {
-				let w = y.factorial();
-				this.incGen(0, w);
-			} else {
-				this.incGen(0, x);
-			}
+			let x = OmegaNum.choose(new OmegaNum(this.tslp).div(20).mul(this.generators[1].dim).mul(this.generators[1].mult.pow(2)).mul(this.generators[1].amount), this.generators[1].dim).pow(0.4);
+			this.incGen(0, x);
 		}
 	}
 

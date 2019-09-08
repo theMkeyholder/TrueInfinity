@@ -19,7 +19,7 @@ function setElems() {
 			setElem('antimattersidebar', `<small>you have </small><big>${d(game.prestige['[0]'].power)}</big><small> antimatter</small>`);
 		}
 	}
-
+	
 	// Main Tab
 	for (let i in game.prestige) {
 		if (i == '[0]') {
@@ -47,7 +47,7 @@ function setElems() {
 			}
 		}
 	}
-
+	
 	// Options Tab
 	if (game.autosave) {
 		setElem('asbutton', 'Autosave: Enabled');

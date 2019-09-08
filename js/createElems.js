@@ -12,11 +12,6 @@ function createPrestige(loc) {
 	b.innerHTML = 'Max All';
 	b.onclick = function() {game.prestige[loc].maxAll()};
 
-	let b2 = createElem('rb' + loc, 'b2' + loc, 'BUTTON');
-	b2.className = 'sbb blue maxall';
-	b2.innerHTML = 'Prestige';
-	b2.onclick = function() {game.prestige[loc].prestige()};
-
 	let gb = createDiv('p' + loc, 'gb' + loc);
 	gb.className = 'genBox';
 }

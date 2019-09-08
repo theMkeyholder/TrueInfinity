@@ -49,10 +49,4 @@ function gameLoop() {
 	for (let i in game.prestige) {
 		game.prestige[i].updandgen();
 	}
-	// console.log(d(game.prestige['[0]'].power))
-	timer++
-	if (timer >= 1000) {
-		timer = 0;
-		console.clear();
-	}
 }
