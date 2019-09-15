@@ -1,2 +1,0 @@
-# TrueInfinity
-Yay!
