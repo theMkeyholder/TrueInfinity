@@ -1,3 +1,10 @@
+## pre-α0.6
+* I started over
+* Quite different UI
+* Fun coloured UI (temporary)
+* Generators and 1st prestige layer
+* No prestige yet
+
 ## pre-α0.5
 * Prestige system
 * (Bad code) => {lag}
