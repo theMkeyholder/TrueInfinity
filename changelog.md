@@ -20,3 +20,14 @@
 * Okay UI
 * 1st Dimension
 * Floating Point Errors
+
+## pre-α0.2
+* Fix stuff
+* Still no gameplay
+
+## pre-α0.1
+* Some UI
+* No gameplay yet
+
+## pre-α0.0
+* Practically nothing but framework behind the scenes
