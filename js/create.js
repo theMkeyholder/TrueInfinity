@@ -18,25 +18,25 @@ function createResBox(loc) {
 function createGenerator(dim, loc, index) {
 	let d = n(dim);
 	let o = game.prestige[JSON.stringify(loc)].dims[index];
-	
+
 	let g = createDiv('p' + JSON.stringify(loc), 'g' + JSON.stringify(loc) + JSON.stringify(o.id), 'g');
-	
+
 	let t = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 't' + JSON.stringify(loc) + JSON.stringify(o.id), 'p', 'gt');
-	
+
 	let b = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'b' + JSON.stringify(loc) + JSON.stringify(o.id), 'button', 'gb sbb green height half');
 	b.innerHTML = 'Buy';
 	let b2 = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'button', 'gb sbb green height half');
 	b2.innerHTML = 'Buy Max';
 	hide(b.id);
 	hide(b2.id);
-	
+
 	let h = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'h' + JSON.stringify(loc) + JSON.stringify(o.id), 'hr');
-	
+
 	setTimeout(function() {
 		setdisp('b' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
 		setdisp('b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
 	}, 50);
-	
+
 	return g;
 }
 
@@ -65,7 +65,7 @@ function updatePrestiges() {
 			if (j.afford) {
 				document.getElementById('b' + loc + dim).className = document.getElementById('b' + loc + dim).className.replace('red', 'green');
 				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('red', 'green');
-			} else { 
+			} else {
 				document.getElementById('b' + loc + dim).className = document.getElementById('b' + loc + dim).className.replace('green', 'red');
 				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('green', 'red');
 			}
