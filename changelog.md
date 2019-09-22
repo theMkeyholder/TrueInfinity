@@ -1,3 +1,23 @@
+# α
+## α1.0
+### α1.0.2
+* Added a title (lol, should've been way earlier)
+* Added stats
+
+### α1.0.1
+* Removed the Undefined Dimension (serves me right for not testing my naming code...)
+
+### α1.0.0
+* Lots of stuff
+* Gooder prestige system
+* Less lag
+* Big numbers
+* 435673rd Dimension
+* Buy and buy max buttons turn red if you can't afford something
+* Prestige layer names
+* Can't remember other things but there were others
+
+# pre-α
 ## pre-α0.6
 * I started over
 * Quite different UI

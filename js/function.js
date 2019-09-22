@@ -63,10 +63,15 @@ function toggleSB() {
 	} else {
 		setTimeout(() => document.getElementById('mt2').innerHTML = 'S', 200);
 	}
-	if (document.getElementById('mt3').innerHTML == 'A') {
+	if (document.getElementById('mt3').innerHTML == 'Ac') {
 		setTimeout(() => document.getElementById('mt3').innerHTML = 'Achievements', 300);
 	} else {
-		setTimeout(() => document.getElementById('mt3').innerHTML = 'A', 200);
+		setTimeout(() => document.getElementById('mt3').innerHTML = 'Ac', 200);
+	}
+	if (document.getElementById('mt4').innerHTML == 'Au') {
+		setTimeout(() => document.getElementById('mt4').innerHTML = 'Automation', 300);
+	} else {
+		setTimeout(() => document.getElementById('mt4').innerHTML = 'Au', 200);
 	}
 }
 
@@ -163,23 +168,23 @@ function getMult(loc) {
 }
 
 const NAMES = [
-	'infinity',
-	'eternity',
-	'reality',
-	'equality',
-	'affinity',
+	'infinity', 
+	'eternity', 
+	'reality', 
+	'equality', 
+	'affinity', 
 	'celerity',
-	'identity',
-	'vitality',
-	'immunity',
-	'atrocity',
-	'immensity',
-	'severity',
-	'fatality',
-	'insanity',
-	'calamity',
-	'futility',
-	'finality',
+	'identity', 
+	'vitality', 
+	'immunity', 
+	'atrocity', 
+	'immensity', 
+	'severity', 
+	'fatality', 
+	'insanity', 
+	'calamity', 
+	'futility', 
+	'finality', 
 	'unity'
 ];
 
