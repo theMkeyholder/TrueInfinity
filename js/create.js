@@ -1,9 +1,13 @@
 function createLayer(loc) {
 	let p = createDiv('layerswrapper', 'p' + JSON.stringify(loc), 'p');
 	let r = createResBox(loc);
-	for (let i of game.prestige[JSON.stringify(loc)].dims) {
-		createGenerator(i.dim, loc, game.prestige[JSON.stringify(loc)].dims.indexOf(i));
-	}
+	let m = createElem('p' + JSON.stringify(loc), 'm' + JSON.stringify(loc), 'button', 'maxall sbb green');
+	m.innerHTML = 'Max All';
+	m.onclick = () => {game.prestige[JSON.stringify(loc)].maxAll()};
+	let br = createElem('p' + JSON.stringify(loc), '', 'br');
+	let pb = createElem('p' + JSON.stringify(loc), 'pb' + JSON.stringify(loc), 'button', 'pb sbb blue');
+	pb.innerHTML = 'Prestige for: ';
+	pb.onclick = () => {prestige(loc)};
 }
 
 function createResBox(loc) {
@@ -13,16 +17,26 @@ function createResBox(loc) {
 
 function createGenerator(dim, loc, index) {
 	let d = n(dim);
-	
-	let g = createDiv('p' + JSON.stringify(loc), 'g' + JSON.stringify(loc) + JSON.stringify(d.array), 'g');
-	
-	let t = createElem('g' + JSON.stringify(loc) + JSON.stringify(d.array), 't' + JSON.stringify(loc) + JSON.stringify(d.array), 'p', 'gt');
-	
-	let b = createElem('g' + JSON.stringify(loc) + JSON.stringify(d.array), 'b' + JSON.stringify(loc) + JSON.stringify(d.array), 'button', 'gb sbb green height half');
+	let o = game.prestige[JSON.stringify(loc)].dims[index];
+
+	let g = createDiv('p' + JSON.stringify(loc), 'g' + JSON.stringify(loc) + JSON.stringify(o.id), 'g');
+
+	let t = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 't' + JSON.stringify(loc) + JSON.stringify(o.id), 'p', 'gt');
+
+	let b = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'b' + JSON.stringify(loc) + JSON.stringify(o.id), 'button', 'gb sbb green height half');
 	b.innerHTML = 'Buy';
-	let b2 = createElem('g' + JSON.stringify(loc) + JSON.stringify(d.array), 'b2' + JSON.stringify(loc) + JSON.stringify(d.array), 'button', 'gb sbb green height half');
+	let b2 = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'button', 'gb sbb green height half');
 	b2.innerHTML = 'Buy Max';
-	
+	hide(b.id);
+	hide(b2.id);
+
+	let h = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'h' + JSON.stringify(loc) + JSON.stringify(o.id), 'hr');
+
+	setTimeout(function() {
+		setdisp('b' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
+		setdisp('b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
+	}, 50);
+
 	return g;
 }
 
@@ -44,10 +58,16 @@ function updatePrestiges() {
 			createLayer(rloc);
 		}
 		for (let j of game.prestige[i].dims) {
-			let dim = JSON.stringify(j.dim.array);
-			let rdim = j.dim.array;
+			let dim = j.id
 			if (document.getElementById('g' + loc + dim) == null) {
-				createGenerator(rdim, rloc, game.prestige[i].dims.indexOf(j));
+				createGenerator(dim, rloc, game.prestige[i].dims.indexOf(j));
+			}
+			if (j.afford) {
+				document.getElementById('b' + loc + dim).className = document.getElementById('b' + loc + dim).className.replace('red', 'green');
+				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('red', 'green');
+			} else {
+				document.getElementById('b' + loc + dim).className = document.getElementById('b' + loc + dim).className.replace('green', 'red');
+				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('green', 'red');
 			}
 		}
 		let loc2 = loc.replace(']', '')
@@ -58,7 +78,7 @@ function updatePrestiges() {
 			let dim = id.replace('g', '').replace(loc, '');
 			let del = true;
 			for (let k of game.prestige[i].dims) {
-				if (JSON.stringify(k.dim.array) == dim) {
+				if (JSON.stringify(k.id) == dim) {
 					del = false;
 					break;
 				}

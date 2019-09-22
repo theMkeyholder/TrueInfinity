@@ -8,7 +8,7 @@ N.sci = function(num, pres = 0) {
 	let x = new OmegaNum(num).floor();
 	let a = x.array;
 	let l = a.length;
-	
+
 	if (l == 1) {
 		if (x.toNumber() < 1e6) {
 			return x.toString();
@@ -20,14 +20,16 @@ N.sci = function(num, pres = 0) {
 			if (x.log10().floor().toNumber() < 1e6) {
 				return Math.pow(10, a[0] % 1).toFixed(pres).toString() + 'e' + x.log10().floor().toString()
 			} else {
-				return Math.pow(10, a[0] % 1).toFixed(pres).toString() + 'e' + N.sci(x.log10().floor());
-			}	
+				return 'e' + N.sci(x.log10().floor());
+			}
 		} else {
 			if (x.log10().floor().toNumber() < 1e6) {
 				return Math.pow(10, a[0] % 1).toFixed(0).toString() + 'e' + x.log10().floor().toString()
 			} else {
-				return Math.pow(10, a[0] % 1).toFixed(0).toString() + 'e' + N.sci(x.log10().floor());
-			}	
+				return 'e' + N.sci(x.log10().floor());
+			}
 		}
+	} else {
+		return num.toString();
 	}
 }

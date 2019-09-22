@@ -27,11 +27,11 @@ let game;
 
 function init() {
 	game = new Game();
-	
+
 	if (!load()) {
 		firstTime();
 	}
-	
+
 	setInterval(loop, 50);
 }
 
