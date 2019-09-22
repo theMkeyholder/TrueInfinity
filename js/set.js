@@ -34,4 +34,12 @@ function setElems() {
 			}
 		}
 	}
+	
+	// Statistics
+	
+	setElem('stats', `
+		You have ${f(game.prestige['[0]'].points)} antimatter<br>
+		Your best prestige layer is ${JSON.stringify(game.max_layer) == '[0]' ? '...oh, you haven\'t prestiged yet' : getLayerName(game.max_layer)}<br>
+		You have spent ${game.disp_time} in game
+	`);
 }
