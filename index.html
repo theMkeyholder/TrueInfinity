@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		
+		<link href='css/stylesheet.css' rel='stylesheet'></link>
+		<link href='css/styled_buttons.css' rel='stylesheet'></link>
+		
+		<script src='js/OmegaNum.js'></script>
+		<script src='js/notation.js'></script>
+		<script src='js/main.js'></script>
+		<script src='js/game.js'></script>
+		<script src='js/set.js'></script>
+		<script src='js/create.js'></script>
+		<script src='js/function.js'></script>
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146664738-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-146664738-1');
+		</script>
+	</head>
+	
+	<body onload='mt(0)'>
+		<div id='game'>
+			<div id='topbar'>
+				True Infinity | α1.0.0 | Reinhardt
+			</div>
+			
+			<div id='sidebar'>
+				<button id='toggleSB' class='sbb' onclick='toggleSB()'>>></button>
+				<br><br>
+				<button id='mt0' class='mt sbb grey' onclick='mt(0)'>D</button>
+				<button id='mt1' class='mt sbb blue' onclick='mt(1)'>O</button>
+				<button id='mt2' class='mt sbb aqua' onclick='mt(2)'>S</button>
+				<button id='mt3' class='mt sbb red' onclick='mt(3)'>A</button>
+			</div>
+			
+			<div id='main'>
+				<div id='mtb0' class='maintab'>
+					<div id='layerswrapper'>
+					</div>
+				</div>
+				<div id='mtb1' class='maintab'>
+					<button id='ws' class='sbb red' onclick='wipe()'>HARD RESET</button>
+				</div>
+				<div id='mtb2' class='maintab'>
+					Statistics: Coming Soon
+				</div>
+				<div id='mtb3' class='maintab'>
+					Achievements: Coming Soon
+				</div>
+			</div>
+		</div>
+		<script>
+			init();
+		</script>
+	</body>
+</html>
