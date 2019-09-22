@@ -2,6 +2,7 @@
 ## α1.0
 ### α1.0.2
 * Added a title (lol, should've been way earlier)
+* Added stats
 
 ### α1.0.1
 * Removed the Undefined Dimension (serves me right for not testing my naming code...)
