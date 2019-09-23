@@ -20,7 +20,12 @@ function wipe() {
 function load() {
 	if (localStorage.getItem('save') != undefined && localStorage.getItem('save') != 'undefined' && localStorage.getItem('save') != null) {
 		clearAll();
-		game = new Game(JSON.parse(atob(localStorage.getItem('save'))));
+		try {
+			game = new Game(JSON.parse(atob(localStorage.getItem('save'))));
+		} catch(e) {
+			console.warn('Outdated save, updating');
+			game = new Game(JSON.parse(localStorage.getItem('save')));
+		}
 		save();
 		return true;
 	} else {
