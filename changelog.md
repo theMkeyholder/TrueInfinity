@@ -2,7 +2,10 @@
 
 ## α1.0
 
-### α1.0.2
+### α1.0.4
+* Fixed the loading system, so that it accepts saves from before α1.0.3
+
+### α1.0.3
 * Added import and export options
 * Added more save, load, and autosave options
 
