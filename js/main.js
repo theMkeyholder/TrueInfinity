@@ -42,6 +42,9 @@ function exp() {
 function imp() {
 	let b64 = prompt('Enter a save file: ');
 	let c = true;
+	if (b64 == null) {
+		c = false;
+	}
 	let json;
 	try {
 		json = atob(b64);

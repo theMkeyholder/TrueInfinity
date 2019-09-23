@@ -2,6 +2,10 @@
 
 ## α1.0
 
+### α1.0.5
+* Bug fix in importing
+* Bug fix in autosave toggle not saving
+
 ### α1.0.4
 * Fixed the loading system, so that it accepts saves from before α1.0.3
 
