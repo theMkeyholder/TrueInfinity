@@ -104,6 +104,11 @@ function setElem(id, v) {
 	}
 }
 
+function toggleas() {
+	game.as = !game.as;
+	save();
+}
+
 const THRESHOLD = OmegaNum(1.79e308);
 
 function getPrestigeGain(num) {
