@@ -1,5 +1,11 @@
 # α
+
 ## α1.0
+
+### α1.0.2
+* Added import and export options
+* Added more save, load, and autosave options
+
 ### α1.0.2
 * Added a title (lol, should've been way earlier)
 * Added stats
@@ -18,6 +24,7 @@
 * Can't remember other things but there were others
 
 # pre-α
+
 ## pre-α0.6
 * I started over
 * Quite different UI

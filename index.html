@@ -28,7 +28,7 @@
 	<body onload='mt(0)'>
 		<div id='game'>
 			<div id='topbar'>
-				True Infinity | α1.0.2 | Reinhardt
+				True Infinity | α1.0.3 | Reinhardt
 			</div>
 			
 			<div id='sidebar'>
@@ -47,6 +47,15 @@
 					</div>
 				</div>
 				<div id='mtb1' class='maintab'>
+					<button id='save' class='sbb green' onclick='save()'>SAVE</button>
+					<button id='load' class='sbb aqua' onclick='load()'>LOAD</button>
+					<br><br>
+					<button id='as' class='sbb green' onclick='toggleas()'>AUTOSAVE</button>
+					<p id='asintvp'>Autosave every <input id='asintv'></input> seconds<p>
+					<br><br>
+					<button id='exp' class='sbb green' onclick='exp()'>EXPORT</button>
+					<button id='imp' class='sbb aqua' onclick='imp()'>IMPORT</button>
+					<br><br>
 					<button id='ws' class='sbb red' onclick='wipe()'>HARD RESET</button>
 				</div>
 				<div id='mtb2' class='maintab'>

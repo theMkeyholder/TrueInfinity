@@ -1,6 +1,9 @@
 // Chuck your data into the depths of the localStorage variable...
 function save() {
-	localStorage.setItem('save', JSON.stringify(game));
+	localStorage.setItem('save', btoa(JSON.stringify(game)));
+	if (game.as) {
+		setTimeout(save, game.asintv);
+	}
 }
 
 // Clear the save file
@@ -16,10 +19,40 @@ function wipe() {
 // Retrieve your data from the depths of the localStorage variable...
 function load() {
 	if (localStorage.getItem('save') != undefined && localStorage.getItem('save') != 'undefined' && localStorage.getItem('save') != null) {
-		game = new Game(JSON.parse(localStorage.getItem('save')));
+		clearAll();
+		game = new Game(JSON.parse(atob(localStorage.getItem('save'))));
+		save();
 		return true;
 	} else {
 		return false;
+	}
+}
+
+// Export a save file
+function exp() {
+	prompt('Exported Save: ', btoa(JSON.stringify(game)));
+}
+
+// Import a save file
+function imp() {
+	let b64 = prompt('Enter a save file: ');
+	let c = true;
+	let json;
+	try {
+		json = atob(b64);
+	} catch(e) {
+		c = false;
+		alert(e);
+	}
+	if (c) {
+		if (confirm('Are you sure? This will override your current progress!')) {
+			clearAll();
+			game = new Game(JSON.parse(json));
+			save();
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
@@ -32,6 +65,7 @@ function init() {
 		firstTime();
 	}
 	
+	document.getElementById('asintv').value = game.asintv;
 	setInterval(loop, 50);
 }
 
@@ -40,7 +74,6 @@ function firstTime() {
 }
 
 function loop() {
-	save();
 	game.update();
 	setElems();
 	updatePrestiges();

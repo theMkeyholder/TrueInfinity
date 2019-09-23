@@ -11,6 +11,8 @@ class Game {
 		}
 		
 		this.time = data ? (data.time || 0) : 0;	
+		this.asintv = data ? (data.asintv || 10) : 10;	
+		this.as = data ? (data.as || true) : true;
 
 		this.maxAllCooldown = 0;
 		this.max_layer = data ? (data.max_layer || [0]) : [0];	
