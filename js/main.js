@@ -2,7 +2,7 @@
 function save() {
 	localStorage.setItem('save', btoa(JSON.stringify(game)));
 	if (game.as) {
-		setTimeout(save, game.asintv);
+		setTimeout(save, game.asintv * 1000);
 	}
 }
 

@@ -11,7 +11,7 @@ class Game {
 		}
 
 		this.starttime = data ? (new Date(data.starttime) || new Date()) : new Date();
-		this.asintv = data ? (data.asintv || 10) : 10;
+		this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
 		this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
 
 		this.max_layer = data ? (data.max_layer || [0]) : [0];
