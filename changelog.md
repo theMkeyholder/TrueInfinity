@@ -1,6 +1,21 @@
 # α
 
+## α1.1
+
+### α1.1.0
+* Better prestige code
+* Fixed the bug that meant e1e16+ IP didn't affect multipliers correctly!
+* Fix exporting and made it better
+* Automation!! Auto Max All and Auto Prestige now available post-celerity!!
+* You can go really far now, almost to a googolplex, if you have a supercomputer
+* Actually (almost) infinite layers without lag in α1.2.0
+* Better time system that doesn't rely on fps
+
 ## α1.0
+
+### α1.0.5
+* Bug fix in importing
+* Bug fix in autosave toggle not saving
 
 ### α1.0.4
 * Fixed the loading system, so that it accepts saves from before α1.0.3
@@ -25,6 +40,8 @@
 * Buy and buy max buttons turn red if you can't afford something
 * Prestige layer names
 * Can't remember other things but there were others
+
+*********************************************************
 
 # pre-α
 

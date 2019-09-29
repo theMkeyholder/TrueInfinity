@@ -96,6 +96,15 @@ hr {
 	overflow-y: hidden;
 }
 
+#autodiv {
+	min-width: 100%;
+	width: max-content;
+	height: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
 .mt {
 	font-size: 25px;
 }
@@ -134,4 +143,19 @@ hr {
 
 .pb {
 	font-size: 11px;
+}
+
+.auto {
+	width: 200px;
+	height: 100%;
+	background-color: silver;
+	float: left;
+}
+
+.ama {
+	height: 80px;
+}
+
+.ap {
+	height: 80px;
 }

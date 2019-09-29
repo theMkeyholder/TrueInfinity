@@ -35,13 +35,33 @@ function load() {
 
 // Export a save file
 function exp() {
-	prompt('Exported Save: ', btoa(JSON.stringify(game)));
+	// prompt('Exported Save: ', btoa(JSON.stringify(game)));
+	let output = document.getElementById('expout');
+	let parent = output.parentElement;
+	parent.style.display = "";
+	output.value = btoa(JSON.stringify(game));
+	output.onblur = function() {
+		parent.style.display = "none";
+	}
+	output.focus();
+	output.select();
+	try {
+		document.execCommand('copy');
+		output.blur();
+		alert('Save copied to clipboard');
+	} catch(e) {
+		console.warn(e);
+		alert('Failed to copy to clipboard');
+	}
 }
 
 // Import a save file
 function imp() {
 	let b64 = prompt('Enter a save file: ');
 	let c = true;
+	if (b64 == null) {
+		c = false;
+	}
 	let json;
 	try {
 		json = atob(b64);
@@ -62,14 +82,18 @@ function imp() {
 }
 
 let game;
+let fpsOut;
+let filterStrength = 20;
+let frameTime = 0, lastLoop = new Date, thisLoop;
 
 function init() {
 	game = new Game();
-	
+	fpsOut = document.getElementById('fps');
+
 	if (!load()) {
 		firstTime();
 	}
-	
+
 	document.getElementById('asintv').value = game.asintv;
 	setInterval(loop, 50);
 }
@@ -82,4 +106,13 @@ function loop() {
 	game.update();
 	setElems();
 	updatePrestiges();
+	auto();
+	fps();
+}
+
+function fps() {
+	var thisFrameTime = (thisLoop=new Date) - lastLoop;
+	frameTime+= (thisFrameTime - frameTime) / filterStrength;
+	lastLoop = thisLoop;
+	fpsOut.innerHTML = (1000 / frameTime).toFixed(0);
 }

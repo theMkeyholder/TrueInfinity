@@ -3,11 +3,21 @@ function createLayer(loc) {
 	let r = createResBox(loc);
 	let m = createElem('p' + JSON.stringify(loc), 'm' + JSON.stringify(loc), 'button', 'maxall sbb green');
 	m.innerHTML = 'Max All';
-	m.onclick = () => {game.prestige[JSON.stringify(loc)].maxAll()};
+	m.onclick = () => {maxAll(loc)};
 	let br = createElem('p' + JSON.stringify(loc), '', 'br');
 	let pb = createElem('p' + JSON.stringify(loc), 'pb' + JSON.stringify(loc), 'button', 'pb sbb blue');
 	pb.innerHTML = 'Prestige for: ';
 	pb.onclick = () => {prestige(loc)};
+
+	let auto = createDiv('autodiv', 'auto' + JSON.stringify(loc), 'auto');
+	let r2 = createDiv('auto' + JSON.stringify(loc), 'r2' + JSON.stringify(loc), 'r');
+	let ama = createElem('auto' + JSON.stringify(loc), 'ama' + JSON.stringify(loc), 'button', 'ama sbb green');
+	ama.onclick = () => {buy_auto_max(loc)};
+	let br2 = createElem('auto' + JSON.stringify(loc), '', 'br');
+	let ap = createElem('auto' + JSON.stringify(loc), 'ap' + JSON.stringify(loc), 'button', 'ap sbb green');
+	ap.onclick = () => {buy_auto_prestige(loc)};
+	let br3 = createElem('auto' + JSON.stringify(loc), '', 'br');
+	let para = createElem('auto' + JSON.stringify(loc), '', 'p', '');
 }
 
 function createResBox(loc) {
@@ -18,25 +28,25 @@ function createResBox(loc) {
 function createGenerator(dim, loc, index) {
 	let d = n(dim);
 	let o = game.prestige[JSON.stringify(loc)].dims[index];
-	
+
 	let g = createDiv('p' + JSON.stringify(loc), 'g' + JSON.stringify(loc) + JSON.stringify(o.id), 'g');
-	
+
 	let t = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 't' + JSON.stringify(loc) + JSON.stringify(o.id), 'p', 'gt');
-	
+
 	let b = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'b' + JSON.stringify(loc) + JSON.stringify(o.id), 'button', 'gb sbb green height half');
 	b.innerHTML = 'Buy';
 	let b2 = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'button', 'gb sbb green height half');
 	b2.innerHTML = 'Buy Max';
 	hide(b.id);
 	hide(b2.id);
-	
+
 	let h = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'h' + JSON.stringify(loc) + JSON.stringify(o.id), 'hr');
-	
+
 	setTimeout(function() {
 		setdisp('b' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
 		setdisp('b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
 	}, 50);
-	
+
 	return g;
 }
 
@@ -65,7 +75,7 @@ function updatePrestiges() {
 			if (j.afford) {
 				document.getElementById('b' + loc + dim).className = document.getElementById('b' + loc + dim).className.replace('red', 'green');
 				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('red', 'green');
-			} else { 
+			} else {
 				document.getElementById('b' + loc + dim).className = document.getElementById('b' + loc + dim).className.replace('green', 'red');
 				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('green', 'red');
 			}
@@ -92,6 +102,10 @@ function updatePrestiges() {
 
 function clearAll() {
 	let node = document.querySelector('#layerswrapper');
+	while (node.hasChildNodes()) {
+		node.removeChild(node.lastChild);
+	}
+	node = document.querySelector('#autodiv');
 	while (node.hasChildNodes()) {
 		node.removeChild(node.lastChild);
 	}
