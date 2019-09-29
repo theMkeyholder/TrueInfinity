@@ -1,6 +1,10 @@
 # α
 
-## α1.1
+## α1.1.1
+* Fix autosave timing
+* Change naming after unity
+* Patch notes page made better
+* Favicon!
 
 ### α1.1.0
 * Better prestige code

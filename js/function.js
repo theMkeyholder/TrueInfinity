@@ -74,7 +74,7 @@ function toggleSB() {
 		setTimeout(() => document.getElementById('mt4').innerHTML = 'Au', 200);
 	}
 	if (document.getElementById('credit').innerHTML == '') {
-		setTimeout(() => document.getElementById('credit').innerHTML = 'Lock icon made by <a href=\'https://www.flaticon.com/authors/smashicons\'>Smashicons</a> from <a href=\'https://www.flaticon.com\'>www.flaticon.com</a>', 300);
+		setTimeout(() => document.getElementById('credit').innerHTML = 'Lock icon made by <a href=\'https://www.flaticon.com/authors/smashicons\'>Smashicons</a> from <a href=\'https://www.flaticon.com\'>www.flaticon.com</a><br>Favicon made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com/">www.flaticon.com</a>', 300);
 	} else {
 		setTimeout(() => document.getElementById('credit').innerHTML = '', 200);
 	}
@@ -200,16 +200,10 @@ function getLayerName(loc) {
 		if (JSON.stringify(loc) != '[0]') {
 			let floor = Math.floor(loc[0] / (NAMES.length + 1));
 			if (floor != 0) {
-				if (floor == 1) {
-					str += 'meta-';
-				} else {
-					str += 'meta<sup>';
-					str += floor;
-					str += '</sup>-';
-				}
+				str = 'prestige ' + (loc[0] + 1)
+			} else {
+				str = NAMES[(loc[0] - 1) % NAMES.length];
 			}
-			let name = NAMES[(loc[0] - 1) % NAMES.length];
-			str += name;
 		}
 	}
 	return str;

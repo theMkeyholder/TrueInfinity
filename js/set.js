@@ -44,7 +44,7 @@ function setElems() {
 	// Autosave Stuff
 	if (game.as) {
 		document.getElementById('as').className = document.getElementById('as').className.replace('red', 'green');
-		game.asintv = document.getElementById('asintv').value;
+		game.asintv = JSON.parse(document.getElementById('asintv').value);
 		show('asintvp');
 	} else {
 		document.getElementById('as').className = document.getElementById('as').className.replace('green', 'red');
