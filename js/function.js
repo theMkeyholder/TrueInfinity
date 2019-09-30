@@ -240,10 +240,7 @@ function buy_auto_max(loc) {
 }
 
 function auto_prestige_cost(loc) {
-	let x = [...loc];
-	x[0]++;
-	x[0] *= 10;
-	return new OmegaNum(x).tetr(3);
+	return OmegaNum.pow(10, auto_max_cost(loc));
 }
 
 function afford_auto_prestige(loc) {

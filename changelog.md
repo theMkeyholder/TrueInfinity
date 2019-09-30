@@ -1,6 +1,14 @@
 # α
 
-## α1.1.1
+## α1.1
+
+### α1.1.2
+* Remove unneeded dependency
+* Fix up changelog / patch notes
+* Made how to play page
+* Made prestige automation cheaper
+
+### α1.1.1
 * Fix autosave timing
 * Change naming after unity
 * Patch notes page made better
