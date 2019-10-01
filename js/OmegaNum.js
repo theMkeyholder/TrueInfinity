@@ -33,9 +33,9 @@
       // It is not recommended to make this number too big.
       // `OmegaNum.maxArrow = 1000;`
       maxArrow: 1e3,
-      
+
       // Level of debug information printed in console
-      // 
+      //
       // NONE   0 Show no information.
       // NORMAL 1 Show operations.
       // ALL    2 Show everything.
@@ -750,7 +750,7 @@
     OmegaNum.ROUND_HALF_EVEN = 6;
     OmegaNum.ROUND_HALF_CEIL = 7;
     OmegaNum.ROUND_HALF_FLOOR = 8;
-    
+
     OmegaNum.NONE = 0;
     OmegaNum.NORMAL = 1;
     OmegaNum.ALL = 2;
@@ -758,7 +758,7 @@
     OmegaNum.clone=clone;
     OmegaNum.config=OmegaNum.set=config;
     OmegaNum=Object.assign(OmegaNum,Q);
-    
+
     if (obj === void 0) obj = {};
     if (obj) {
       ps = ['rounding', 'maxArrow', 'debug'];
@@ -766,7 +766,7 @@
     }
 
     OmegaNum.config(obj);
-    
+
     return OmegaNum;
   }
 

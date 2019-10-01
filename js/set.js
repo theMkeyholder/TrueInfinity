@@ -16,18 +16,25 @@ function setElems() {
 				You have ${f(p.points)} antimatter
 			`);
 		}
-		if (p.points.gt(1.79e308)) {
+		if (getPrestigeGain(p.points).gt(0) || getPrestigeGain2(p.points, game.max_layer[0] - p.loc[0]).gt(0)) {
 			setdisp('pb' + JSON.stringify(p.loc), 'inline-block');
-		} else {
+		} else if (p.points.lt(1.79e308) && game.state == 0) {
 			hide('pb' + JSON.stringify(p.loc));
 		}
-		setElem('pb' + JSON.stringify(p.loc), `
-			Prestige for: ${f(getPrestigeGain(p.points).mul(10))} ${getLayerName(p.next_loc)} points
-		`);
+		if (game.state == 0 || p.str_loc == JSON.stringify(game.max_layer)) {
+			setElem('pb' + JSON.stringify(p.loc), `
+				Prestige for: ${f(getPrestigeGain(p.points).mul(10))} ${getLayerName(p.next_loc)} points
+			`);
+		} else if (game.state == 1){
+			let diff = game.max_layer[0] - p.loc[0];
+			setElem('pb' + JSON.stringify(p.loc), `
+				Prestige for: ${f(getPrestigeGain2(p.points, diff).mul(10))} ${getLayerName(game.max_layer)} points
+			`);
+		}
 		for (let g of p.dims) {
 			if (p.str_loc != '[0]') {
 				setElem('t' + JSON.stringify(g.loc) + JSON.stringify(g.id), `
-					${getLayerName([g.loc]).replace(/(^|[\s-])\S/g, function (match) {return match.toUpperCase()})} Dimension ${f(g.dim.add(1))}<br>
+					${getLayerName(g.loc).replace(/(^|[\s-])\S/g, function (match) {return match.toUpperCase()})} Dimension ${f(g.dim.add(1))}<br>
 					${f(g.amount)} x${f(g.mult)}<br>
 					Cost: ${f(g.price)}
 				`);

@@ -1,5 +1,12 @@
 # α
 
+## α1.2
+
+### α1.2.0
+* More prestige, less lag
+* Faster dimension buying
+* Bigger numbers
+
 ## α1.1
 
 ### α1.1.2
@@ -19,7 +26,7 @@
 * Fixed the bug that meant e1e16+ IP didn't affect multipliers correctly!
 * Fix exporting and made it better
 * Automation!! Auto Max All and Auto Prestige now available post-celerity!!
-* You can go really far now, almost to a googolplex, if you have a supercomputer
+* You can go really far now, past a googolplex, even further if you have a supercomputer
 * Actually (almost) infinite layers without lag in α1.2.0
 * Better time system that doesn't rely on fps
 

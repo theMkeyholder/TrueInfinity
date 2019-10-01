@@ -43,8 +43,8 @@ function createGenerator(dim, loc, index) {
 	let h = createElem('g' + JSON.stringify(loc) + JSON.stringify(o.id), 'h' + JSON.stringify(loc) + JSON.stringify(o.id), 'hr');
 
 	setTimeout(function() {
-		setdisp('b' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
-		setdisp('b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
+		if (document.getElementById('b' + JSON.stringify(loc) + JSON.stringify(o.id))) setdisp('b' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
+		if (document.getElementById('b2' + JSON.stringify(loc) + JSON.stringify(o.id))) setdisp('b2' + JSON.stringify(loc) + JSON.stringify(o.id), 'inline-block');
 	}, 50);
 
 	return g;
@@ -58,7 +58,8 @@ function updatePrestiges() {
 		let loc = id.replace('p', '');
 		let rloc = JSON.parse(loc);
 		if (typeof game.prestige[loc] == 'undefined') {
-			removeDiv(id);
+			removeElem(id);
+			removeElem(id.replace('p', 'auto'));
 		}
 	}
 	for (let i in game.prestige) {

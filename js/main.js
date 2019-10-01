@@ -87,10 +87,10 @@ let filterStrength = 20;
 let frameTime = 0, lastLoop = new Date, thisLoop;
 
 function init() {
-	game = new Game();
 	fpsOut = document.getElementById('fps');
 
 	if (!load()) {
+		game = new Game();
 		firstTime();
 	}
 

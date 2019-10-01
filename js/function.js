@@ -23,10 +23,11 @@ function l(str) {
 }
 
 function secretFormula(tslp, dim, amount, mult) {
-	let x = new OmegaNum(tslp).div(20).mul(dim).mul(mult).mul(amount).floor();
+	let prod = amount.mul(mult.mul(dim));
+	let x = new OmegaNum(tslp).mul(prod).div(20).floor();
 	let y = dim.floor();
 	let z = OmegaNum.choose(x, y).pow(0.5);
-	return z.gt(1e3) ? z : y.factorial();
+	return !z.eq(1) ? z : x.mul(y.factorial());
 }
 
 function createDiv(parentId, thisId, classes = '') {
@@ -117,30 +118,48 @@ function toggleas() {
 const THRESHOLD = OmegaNum(1.79e308);
 
 function getPrestigeGain(num) {
-  num = num.max(1e3);
-  let steps = num.logBase(THRESHOLD) - 1;
-  let gens = num.log10().logBase(2);
-  let pow = 4 * steps / gens;
-  return OmegaNum.floor(OmegaNum.pow(10, pow)) || n(1);
+	num = num.max(1e3);
+	let steps = num.logBase(THRESHOLD).sub(1);
+	let gens = num.log10().logBase(2);
+	let pow = steps.div(gens).mul(8);
+	return OmegaNum.floor(OmegaNum.pow(10, pow)) || n(0);
+}
+
+function getPrestigeGain2(num, diff) {
+	let x = getPrestigeGain(num);
+	if (!x.eq(0)) {
+		return x.logBase(diff).pow(4);
+	}
+	return n(0);
 }
 
 function prestige(loc) {
 	let str_loc = JSON.stringify(loc);
-	let next_loc = JSON.parse(str_loc);
-	next_loc[0]++;
-	let next_str_loc = JSON.stringify(next_loc);
-	let gain = getPrestigeGain(game.prestige[str_loc].points).mul(10);
-	if (!gain.eq(0)) {
-		if (game.prestige[next_str_loc]) {
-			game.prestige[next_str_loc].incPoints(gain);
-		} else {
-			game.prestige[next_str_loc] = new Layer(next_loc, gain);
+	if (game.state == 0 || str_loc == JSON.stringify(game.max_layer)) {
+		let next_loc = JSON.parse(str_loc);
+		next_loc[0]++;
+		let next_str_loc = JSON.stringify(next_loc);
+		let gain = getPrestigeGain(game.prestige[str_loc].points).mul(10);
+		if (!gain.eq(0)) {
+			if (game.prestige[next_str_loc]) {
+				game.prestige[next_str_loc].incPoints(gain);
+			} else {
+				game.prestige[next_str_loc] = new Layer(next_loc, gain);
+			}
+			for (let i in game.prestige) {
+				let p = game.prestige[i];
+				if (cmpLayer(next_loc, p.loc) == 1) p.clear();
+			}
+			if (cmpLayer(game.max_layer, next_loc) == -1) game.max_layer = next_loc;
 		}
-		for (let i in game.prestige) {
-			let p = game.prestige[i];
-			if (cmpLayer(next_loc, p.loc) == 1) p.clear();
+	} else if (game.state == 1) {
+		let max_loc = game.max_layer;
+		let diff = max_loc[0] - loc[0];
+		let gain = getPrestigeGain2(game.prestige[str_loc].points, diff).mul(10);
+		if (!gain.eq(0)) {
+			game.prestige[JSON.stringify(max_loc)].incPoints(gain);
+			game.prestige['[0]'].clear();
 		}
-		if (cmpLayer(game.max_layer, next_loc) == -1) game.max_layer = next_loc;
 	}
 }
 
@@ -162,12 +181,18 @@ function cmpLayer(loc1, loc2) {
 
 function getMult(loc) {
 	let x = n(1);
-	for (let i = loc[0] + 1; i < game.max_layer[0] + 1; i++) {
-		let temp = [...loc];
-		temp[0] = i;
-		let temp2 = JSON.stringify(temp);
-		if (!game.prestige[temp2].power.eq(0)) {
-			x = OmegaNum.mul(game.prestige[temp2].power.pow(i - loc[0] == 1 ? i - loc[0] : (i - loc[0]) * 10), x);
+	if (cmpLayer(game.max_layer, [7]) < 0) {
+		for (let i = loc[0] + 1; i < game.max_layer[0] + 1; i++) {
+			let temp = [...loc];
+			temp[0] = i;
+			let temp2 = JSON.stringify(temp);
+			if (!game.prestige[temp2].power.eq(0)) {
+				x = OmegaNum.mul(game.prestige[temp2].power.pow(i - loc[0] == 1 ? i - loc[0] : (i - loc[0]) * 10), x);
+			}
+		}
+	} else {
+		if (JSON.stringify(loc) == '[0]') {
+			x = OmegaNum.pow(OmegaNum.tetr(game.max_layer[0], 4), game.prestige[JSON.stringify(game.max_layer)].power).floor();
 		}
 	}
 	return x.eq(0) ? x.add(1) : x;
@@ -200,7 +225,7 @@ function getLayerName(loc) {
 		if (JSON.stringify(loc) != '[0]') {
 			let floor = Math.floor(loc[0] / (NAMES.length + 1));
 			if (floor != 0) {
-				str = 'prestige ' + (loc[0] + 1)
+				str = 'p' + (loc[0] + 1);
 			} else {
 				str = NAMES[(loc[0] - 1) % NAMES.length];
 			}
@@ -214,10 +239,17 @@ function maxAll(loc) {
 }
 
 function autoPrestigeGain(loc) {
-	let gain = getPrestigeGain(game.prestige[JSON.stringify(loc)].points).div(1000000).floor();
-	let arr = [...loc];
-	arr[0]++;
-	if (game.prestige[JSON.stringify(arr)]) game.prestige[JSON.stringify(arr)].incPoints(gain);
+	let gain = game.state == 0 ? getPrestigeGain(game.prestige[JSON.stringify(loc)].points).div(1000000).floor() : getPrestigeGain2(game.prestige[JSON.stringify(loc)].points, game.max_layer[0] - loc[0]).div(1000000).floor();
+	if (!gain.eq(0) && gain.isint()) {
+		let arr;
+		if (game.state == 0) {
+			arr = [...loc];
+			arr[0]++;
+		} else {
+			arr = game.max_layer;
+		}
+		if (game.prestige[JSON.stringify(arr)]) game.prestige[JSON.stringify(arr)].incPoints(gain);
+	}
 }
 
 function auto_max_cost(loc) {

@@ -15,6 +15,7 @@ class Game {
 		this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
 
 		this.max_layer = data ? (data.max_layer || [0]) : [0];
+		this.state = 0;
 
 		this.automaxall = data ? (data.automaxall || []) : [];
 		this.autoprestige = data ? (data.autoprestige || []) : [];
@@ -25,6 +26,31 @@ class Game {
 			this.prestige[i].update();
 			if (!this.prestige[i].initiated) {
 				this.prestige[i].init();
+			}
+		}
+		if (cmpLayer(this.max_layer, [7]) >= 0) {
+			if (Object.keys(this.prestige).length >= 2) {
+				for (let i in this.prestige) {
+					let j = this.prestige[i];
+					if (j.str_loc != '[0]' && cmpLayer(this.max_layer, j.loc) == 1) {
+						delete this.prestige[i];
+					}
+				}
+			}
+			this.state = 1;
+		} else {
+			this.state = 0;
+		}
+		for (let i of this.automaxall) {
+			let str_loc = JSON.stringify(i);
+			if (!game.prestige[str_loc]) {
+				this.automaxall.splice(this.automaxall.indexOf(i), 1);
+			}
+		}
+		for (let i of this.autoprestige) {
+			let str_loc = JSON.stringify(i);
+			if (!game.prestige[str_loc]) {
+				this.autoprestige.splice(this.autoprestige.indexOf(i), 1);
 			}
 		}
 	}
@@ -97,6 +123,7 @@ class Layer {
 	}
 
 	update() {
+
 		this.mult = getMult(this.loc);
 
 		if (this.points.gt('ee6')) {
@@ -140,7 +167,7 @@ class Layer {
 				if (dm.eq(0)) {
 					this.str_loc == '[0]' ? this.incPoints(p) : this.incPower(p);
 				} else {
-					this.dims[d.dim.sub(1).toNumber()].amount = this.dims[d.dim.sub(1).toNumber()].amount.add(p);
+					this.dims[d.index - 1].amount = OmegaNum.add(p, this.dims[d.index - 1].amount);
 				}
 			}
 		}
@@ -150,14 +177,28 @@ class Layer {
 		if (this.maxAllCooldown == 0) {
 			if (this.dims.length >= 3) {
 				let x = this.dims[2].dim;
-				let val = x.mul(1.1);
+				let val = x.pow(1.1);
 				if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
 					this.dims.push(new Dimension(val, this.loc, 1, 1));
 				} else {
-					for (let d of this.dims) {
-						d.buy();
-						d.buyMax();
+					let val = x.mul(1.1);
+					if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
+						this.dims.push(new Dimension(val, this.loc, 1, 1));
+					} else {
+						let val = x.add(100);
+						if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
+							this.dims.push(new Dimension(val, this.loc, 1, 1));
+						} else {
+							let val = x.add(10);
+							if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
+								this.dims.push(new Dimension(val, this.loc, 1, 1));
+							}
+						}
 					}
+				}
+				for (let d of this.dims) {
+					d.buy();
+					d.buyMax();
 				}
 			} else {
 				for (let d of this.dims) {
@@ -183,13 +224,13 @@ class Layer {
 
 class Dimension {
 	constructor(dim, loc, amount, bought) {
-		this.dim = n(dim || 0);
+		this.dim = n(dim || 0).floor();
 
 		this.loc = loc || [0];
 		this.str_loc = JSON.stringify(this.loc);
 
-		this.amount = n(amount || 0);
-		this.bought = n(bought || 0);
+		this.amount = n(amount || 0).floor();
+		this.bought = n(bought || 0).floor();
 
 		this.price_start = OmegaNum.pow(10, this.dim.add(1));
 
@@ -200,8 +241,16 @@ class Dimension {
 		return OmegaNum.pow(2, this.bought).mul(game.prestige[this.str_loc].mult);
 	}
 
+	get index() {
+		return game.prestige[this.str_loc].dims.indexOf(this);
+	}
+
 	get price() {
-		return OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim.mul(0.9), this.dim.add(1).mul(this.bought.add(1)));
+		if (this.dim.isint()) {
+			return OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim.mul(0.9), this.dim.add(1).mul(this.bought.add(1)));
+		} else {
+			return OmegaNum(0);
+		}
 	}
 
 	get afford() {
@@ -229,7 +278,12 @@ class Dimension {
 	}
 
 	get max_afford() {
-		return OmegaNum.affordGeometricSeries(game.prestige[this.str_loc].points, this.price_start, OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim, this.dim.add(1)), this.bought);
+		if (this.dim.gt(100)) {
+			return new OmegaNum(1);
+		}
+		if (game.prestige[this.str_loc].points.isint() && this.price_start.isint() && OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim, this.dim.add(1)).isint() && this.bought.isint()){
+			return OmegaNum.affordGeometricSeries(game.prestige[this.str_loc].points, this.price_start, OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim, this.dim.add(1)), this.bought);
+		}
 	}
 
 	get max_price() {
