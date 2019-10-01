@@ -10,15 +10,24 @@ class Game {
 			}
 		}
 		
-		this.starttime = data ? (new Date(data.starttime) || new Date()) : new Date();	
-		this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
-		this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
+		this.version = 'α1.2.1';
 		
-		this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);	
-		this.state = 0;
-		
-		this.automaxall = data ? (data.automaxall || []) : [];
-		this.autoprestige = data ? (data.autoprestige || []) : [];
+		if (!data.version) {
+			clearAll();
+			game = new Game();
+			firstTime();
+			save();
+		} else {
+			this.starttime = data ? (new Date(data.starttime) || new Date()) : new Date();	
+			this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
+			this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
+			
+			this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);	
+			this.state = 0;
+			
+			this.automaxall = data ? (data.automaxall || []) : [];
+			this.autoprestige = data ? (data.autoprestige || []) : [];
+		}
 	}
 	
 	update() {
