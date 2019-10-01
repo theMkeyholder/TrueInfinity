@@ -1,4 +1,4 @@
-// Code snippets and templates from Decimal.js
+//Code snippets and templates from Decimal.js
 
 ;(function (globalScope) {
   'use strict';
@@ -33,9 +33,9 @@
       // It is not recommended to make this number too big.
       // `OmegaNum.maxArrow = 1000;`
       maxArrow: 1e3,
-      
+
       // Level of debug information printed in console
-      // 
+      //
       // NONE   0 Show no information.
       // NORMAL 1 Show operations.
       // ALL    2 Show everything.
@@ -311,7 +311,7 @@
     if (this.max(other).gt("ee"+MAX_SAFE_INTEGER)) return this.gt(other)?this.clone():OmegaNum(0);
     if (this/other<=MAX_SAFE_INTEGER) return OmegaNum(this/other);
 	if (OmegaNum.pow(10,this.log10().sub(other.log10())).sub(OmegaNum.pow(10,this.log10().sub(other.log10())).floor()).lt(new OmegaNum(1e-9))) return OmegaNum.pow(10,this.log10().sub(other.log10())).floor();
-	return OmegaNum.pow(10,this.log10().sub(other.log10()));
+    return OmegaNum.pow(10,this.log10().sub(other.log10()));
   }
   Q.divide=Q.div=function (x,y){
     return OmegaNum(x).div(y);
@@ -750,7 +750,7 @@
     OmegaNum.ROUND_HALF_EVEN = 6;
     OmegaNum.ROUND_HALF_CEIL = 7;
     OmegaNum.ROUND_HALF_FLOOR = 8;
-    
+
     OmegaNum.NONE = 0;
     OmegaNum.NORMAL = 1;
     OmegaNum.ALL = 2;
@@ -758,7 +758,7 @@
     OmegaNum.clone=clone;
     OmegaNum.config=OmegaNum.set=config;
     OmegaNum=Object.assign(OmegaNum,Q);
-    
+
     if (obj === void 0) obj = {};
     if (obj) {
       ps = ['rounding', 'maxArrow', 'debug'];
@@ -766,7 +766,7 @@
     }
 
     OmegaNum.config(obj);
-    
+
     return OmegaNum;
   }
 

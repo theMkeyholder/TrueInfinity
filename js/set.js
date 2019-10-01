@@ -47,7 +47,7 @@ function setElems() {
 			}
 		}
 	}
-	
+
 	// Autosave Stuff
 	if (game.as) {
 		document.getElementById('as').className = document.getElementById('as').className.replace('red', 'green');
@@ -57,30 +57,30 @@ function setElems() {
 		document.getElementById('as').className = document.getElementById('as').className.replace('green', 'red');
 		hide('asintvp');
 	}
-	
+
 	// Statistics
-	
+
 	setElem('stats', `
 		You have ${f(game.prestige[joa([0])].points)} antimatter<br>
 		Your best prestige layer is ${JSON.stringify(game.max_layer) == '[0]' ? '...oh, you haven\'t prestiged yet' : getLayerName(game.max_layer)}<br>
 		You have spent ${game.disp_time} in game
 	`);
-	
+
 	// Automation Unlock
 	if (game.celerity_unlocked) {
 		show('autodiv');
 		hide('autolock');
-		
+
 		show('mt4');
 		hide('mt4alt');
 	} else {
 		hide('autodiv');
 		setdisp('autolock', 'inline-block');
-		
+
 		hide('mt4');
 		setdisp('mt4alt', 'inline-block');
 	}
-	
+
 	for (let p2 in game.prestige) {
 		let p = game.prestige[p2];
 		setElem('ama' + JSON.stringify(p.loc), `
@@ -96,7 +96,7 @@ function setElems() {
 				document.getElementById('ama' + JSON.stringify(p.loc)).className = document.getElementById('ama' + JSON.stringify(p.loc)).className.replace('green', 'red');
 			}
 		}
-		
+
 		setElem('ap' + JSON.stringify(p.loc), `
 			Unlock Auto Prestige Gain<br>
 			Cost: ${f(auto_prestige_cost(p.loc))} ${JSON.stringify(p.loc) == '[0]' ? 'Antimatter' : getLayerName(p.loc).replace(/(^|[\s-])\S/g, function (match) {return match.toUpperCase()}) + ' Points'}

@@ -88,12 +88,12 @@ let frameTime = 0, lastLoop = new Date, thisLoop;
 
 function init() {
 	fpsOut = document.getElementById('fps');
-	
+
 	if (!load()) {
 		game = new Game();
 		firstTime();
 	}
-	
+
 	document.getElementById('asintv').value = game.asintv;
 	setInterval(loop, 50);
 }
