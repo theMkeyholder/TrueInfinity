@@ -99,7 +99,7 @@ function init() {
 }
 
 function firstTime() {
-	game.prestige['[0]'] = new Layer([0], 100);
+	game.prestige[joa([0])] = new Layer(oa([0]), 100);
 }
 
 function loop() {

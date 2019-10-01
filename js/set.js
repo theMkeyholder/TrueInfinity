@@ -1,7 +1,7 @@
 function setElems() {
 	for (let p2 in game.prestige) {
 		let p = game.prestige[p2];
-		if (p.str_loc != '[0]') {
+		if (p.str_loc != joa([0])) {
 			setElem('r' + JSON.stringify(p.loc), `
 				You have ${f(p.points)} ${getLayerName(p.loc)} points and ${f(p.power)} ${getLayerName(p.loc)} power
 			`);
@@ -61,7 +61,7 @@ function setElems() {
 	// Statistics
 
 	setElem('stats', `
-		You have ${f(game.prestige['[0]'].points)} antimatter<br>
+		You have ${f(game.prestige[joa([0])].points)} antimatter<br>
 		Your best prestige layer is ${JSON.stringify(game.max_layer) == '[0]' ? '...oh, you haven\'t prestiged yet' : getLayerName(game.max_layer)}<br>
 		You have spent ${game.disp_time} in game
 	`);

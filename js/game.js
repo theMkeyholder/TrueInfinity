@@ -14,7 +14,7 @@ class Game {
 		this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
 		this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
 
-		this.max_layer = data ? (data.max_layer || [0]) : [0];
+		this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);
 		this.state = 0;
 
 		this.automaxall = data ? (data.automaxall || []) : [];
@@ -28,11 +28,11 @@ class Game {
 				this.prestige[i].init();
 			}
 		}
-		if (cmpLayer(this.max_layer, [7]) >= 0) {
+		if (cmpLayer(this.max_layer, oa([7])) >= 0) {
 			if (Object.keys(this.prestige).length >= 2) {
 				for (let i in this.prestige) {
 					let j = this.prestige[i];
-					if (j.str_loc != '[0]' && cmpLayer(this.max_layer, j.loc) == 1) {
+					if (j.str_loc != joa([0]) && cmpLayer(this.max_layer, j.loc) == 1) {
 						delete this.prestige[i];
 					}
 				}
@@ -81,7 +81,7 @@ class Game {
 
 class Layer {
 	constructor(loc, points, power, dims, tslp, auto) {
-		this.loc = loc || [0];
+		this.loc = oa(loc || [0]);
 		this.str_loc = JSON.stringify(this.loc);
 
 		this.points = n(points || 0);
@@ -105,8 +105,8 @@ class Layer {
 	}
 
 	get next_loc() {
-		let next_loc = JSON.parse(this.str_loc);
-		next_loc[0]++;
+		let next_loc = oa(this.loc);
+		next_loc[0] = next_loc[0].add(1)
 		return next_loc;
 	}
 
@@ -123,7 +123,6 @@ class Layer {
 	}
 
 	update() {
-
 		this.mult = getMult(this.loc);
 
 		if (this.points.gt('ee6')) {
@@ -159,13 +158,13 @@ class Layer {
 		if (this.dims[this.dims.length - 1].dim.gte(10)) {
 			this.dims[0].amount = this.dims[0].amount.add(secretFormula(this.tslp, this.dims[1].dim, this.dims[1].amount, this.dims[1].mult));
 			let p = this.dims[0].mult.mul(this.dims[0].amount).div(20);
-			this.str_loc == '[0]' ? this.incPoints(p) : this.incPower(p);
+			this.str_loc == joa([0]) ? this.incPoints(p) : this.incPower(p);
 		} else {
 			for (let d of this.dims) {
 				let p = d.mult.mul(d.amount).div(20);
 				let dm = d.dim;
 				if (dm.eq(0)) {
-					this.str_loc == '[0]' ? this.incPoints(p) : this.incPower(p);
+					this.str_loc == joa([0]) ? this.incPoints(p) : this.incPower(p);
 				} else {
 					this.dims[d.index - 1].amount = OmegaNum.add(p, this.dims[d.index - 1].amount);
 				}
@@ -211,7 +210,7 @@ class Layer {
 	}
 
 	clear() {
-		if (this.str_loc == '[0]') {
+		if (this.str_loc == joa([0])) {
 			this.points = n(10);
 		} else {
 			this.points = n(0);
@@ -226,7 +225,7 @@ class Dimension {
 	constructor(dim, loc, amount, bought) {
 		this.dim = n(dim || 0).floor();
 
-		this.loc = loc || [0];
+		this.loc = oa(loc || [0]);
 		this.str_loc = JSON.stringify(this.loc);
 
 		this.amount = n(amount || 0).floor();
@@ -258,8 +257,8 @@ class Dimension {
 	}
 
 	get next_str_loc() {
-		let x = JSON.parse(this.str_loc);
-		x[0]++;
+		let x = oa(JSON.parse(this.str_loc)[0]);
+		x[0] = x[0].add(1);
 		return JSON.stringify(x);
 	}
 

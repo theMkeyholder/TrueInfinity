@@ -134,10 +134,11 @@ function getPrestigeGain2(num, diff) {
 }
 
 function prestige(loc) {
+	loc = oa(loc);
 	let str_loc = JSON.stringify(loc);
 	if (game.state == 0 || str_loc == JSON.stringify(game.max_layer)) {
-		let next_loc = JSON.parse(str_loc);
-		next_loc[0]++;
+		let next_loc = oa(JSON.parse(str_loc));
+		next_loc[0] = next_loc[0].add(1);
 		let next_str_loc = JSON.stringify(next_loc);
 		let gain = getPrestigeGain(game.prestige[str_loc].points).mul(10);
 		if (!gain.eq(0)) {
@@ -154,11 +155,11 @@ function prestige(loc) {
 		}
 	} else if (game.state == 1) {
 		let max_loc = game.max_layer;
-		let diff = max_loc[0] - loc[0];
+		let diff = max_loc[0].sub(loc[0]);
 		let gain = getPrestigeGain2(game.prestige[str_loc].points, diff).mul(10);
 		if (!gain.eq(0)) {
 			game.prestige[JSON.stringify(max_loc)].incPoints(gain);
-			game.prestige['[0]'].clear();
+			game.prestige[joa([0])].clear();
 		}
 	}
 }
@@ -167,11 +168,11 @@ function cmpLayer(loc1, loc2) {
 	if (loc1.length > loc2.length) return 1;
 	if (loc1.length < loc2.length) return -1;
 	for (let i = loc1.length - 1; i >= 0; i--) {
-		if (loc1[i] > loc2[i]) {
+		if (loc1[i].gt(loc2[i])) {
 			return 1;
 			break;
 		}
-		if (loc1[i] < loc2[i]) {
+		if (loc1[i].lt(loc2[i])) {
 			return -1;
 			break;
 		}
@@ -181,17 +182,18 @@ function cmpLayer(loc1, loc2) {
 
 function getMult(loc) {
 	let x = n(1);
-	if (cmpLayer(game.max_layer, [7]) < 0) {
-		for (let i = loc[0] + 1; i < game.max_layer[0] + 1; i++) {
-			let temp = [...loc];
+	if (cmpLayer(game.max_layer, oa([7])) < 0) {
+		for (let i = loc[0] + 1; i < game.max_layer[0].toNumber() + 1; i++) {
+			i = n(i)
+			let temp = oa(loc);
 			temp[0] = i;
 			let temp2 = JSON.stringify(temp);
 			if (!game.prestige[temp2].power.eq(0)) {
-				x = OmegaNum.mul(game.prestige[temp2].power.pow(i - loc[0] == 1 ? i - loc[0] : (i - loc[0]) * 10), x);
+				x = OmegaNum.mul(game.prestige[temp2].power.pow(i.sub(loc[0]).eq(1) ? i.sub(loc[0]) : i.sub(loc[0]).mul(10)), x);
 			}
 		}
 	} else {
-		if (JSON.stringify(loc) == '[0]') {
+		if (JSON.stringify(loc) == joa([0])) {
 			x = OmegaNum.pow(OmegaNum.tetr(game.max_layer[0], 4), game.prestige[JSON.stringify(game.max_layer)].power).floor();
 		}
 	}
@@ -222,12 +224,12 @@ const NAMES = [
 function getLayerName(loc) {
 	let str = '';
 	if (loc.length = 1) {
-		if (JSON.stringify(loc) != '[0]') {
-			let floor = Math.floor(loc[0] / (NAMES.length + 1));
-			if (floor != 0) {
-				str = 'p' + (loc[0] + 1);
+		if (JSON.stringify(loc) != joa([0])) {
+			let floor = OmegaNum.floor(loc[0].div((NAMES.length + 1)));
+			if (!floor.eq(0)) {
+				str = 'p' + (f(loc[0].add(1)));
 			} else {
-				str = NAMES[(loc[0] - 1) % NAMES.length];
+				str = NAMES[loc[0].sub(1).mod(NAMES.length).toNumber()];
 			}
 		}
 	}
@@ -239,23 +241,24 @@ function maxAll(loc) {
 }
 
 function autoPrestigeGain(loc) {
-	let gain = game.state == 0 ? getPrestigeGain(game.prestige[JSON.stringify(loc)].points).div(1000000).floor() : getPrestigeGain2(game.prestige[JSON.stringify(loc)].points, game.max_layer[0] - loc[0]).div(1000000).floor();
+	let gain = game.state == 0 ? getPrestigeGain(game.prestige[JSON.stringify(loc)].points).div(1000000).floor() : getPrestigeGain2(game.prestige[JSON.stringify(loc)].points, game.max_layer[0].sub(loc[0])).div(1000000).floor();
 	if (!gain.eq(0) && gain.isint()) {
 		let arr;
 		if (game.state == 0) {
-			arr = [...loc];
-			arr[0]++;
+			arr = oa(loc);
+			arr[0] = arr[0].add(1);
 		} else {
 			arr = game.max_layer;
 		}
 		if (game.prestige[JSON.stringify(arr)]) game.prestige[JSON.stringify(arr)].incPoints(gain);
+		else game.prestige[JSON.stringify(arr)] = new Layer(loc, gain);
 	}
 }
 
 function auto_max_cost(loc) {
-	let x = [...loc];
-	x[0]++;
-	x[0] *= 10;
+	let x = oa(loc);
+	x[0] = x[0].add(1);
+	x[0] = x[0].mul(10);
 	return new OmegaNum(x).tetr(2);
 }
 
@@ -285,4 +288,16 @@ function buy_auto_prestige(loc) {
 		game.prestige[JSON.stringify(loc)].subPoints(auto_prestige_cost(loc));
 		game.prestige[JSON.stringify(loc)].is_auto_prestige = true;
 	}
+}
+
+function j(input) {
+	return JSON.stringify(input);
+}
+
+function oa(loc) {
+	return loc.map(e => n(e));
+}
+
+function joa(loc) {
+	return j(oa(loc));
 }
