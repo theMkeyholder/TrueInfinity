@@ -64,7 +64,7 @@ function updatePrestiges() {
 	}
 	for (let i in game.prestige) {
 		let loc = JSON.stringify(game.prestige[i].loc);
-		let rloc = JSON.parse(loc);
+		let rloc = oa(game.prestige[i].loc);
 		if (document.getElementById('p' + loc) == null) {
 			createLayer(rloc);
 		}
@@ -81,8 +81,8 @@ function updatePrestiges() {
 				document.getElementById('b2' + loc + dim).className = document.getElementById('b2' + loc + dim).className.replace('green', 'red');
 			}
 		}
-		let loc2 = loc.replace(']', '')
-		let gens = document.querySelectorAll('#p\\' + loc2 + '\\] .g');
+		let p = document.getElementById('p' + loc);
+		let gens = p.getElementsByClassName('g');
 		for (let j = 0; j < gens.length; j++) {
 			let n = gens[j];
 			let id = n.id;
