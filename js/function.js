@@ -146,7 +146,7 @@ function prestige(loc) {
 				game.prestige[next_str_loc].incPoints(gain);
 			} else {
 				game.prestige[next_str_loc] = new Layer(next_loc, gain);
-			}
+			}    
 			for (let i in game.prestige) {
 				let p = game.prestige[i];
 				if (cmpLayer(next_loc, p.loc) == 1) p.clear();
@@ -201,23 +201,23 @@ function getMult(loc) {
 }
 
 const NAMES = [
-	'infinity',
-	'eternity',
-	'reality',
-	'equality',
-	'affinity',
+	'infinity', 
+	'eternity', 
+	'reality', 
+	'equality', 
+	'affinity', 
 	'celerity',
-	'identity',
-	'vitality',
-	'immunity',
-	'atrocity',
-	'immensity',
-	'severity',
-	'fatality',
-	'insanity',
-	'calamity',
-	'futility',
-	'finality',
+	'identity', 
+	'vitality', 
+	'immunity', 
+	'atrocity', 
+	'immensity', 
+	'severity', 
+	'fatality', 
+	'insanity', 
+	'calamity', 
+	'futility', 
+	'finality', 
 	'unity'
 ];
 
@@ -295,7 +295,7 @@ function j(input) {
 }
 
 function oa(loc) {
-	return loc.map(e => n(e));
+	return loc.map(e => n(e));	
 }
 
 function joa(loc) {
