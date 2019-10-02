@@ -9,15 +9,7 @@ class Game {
 				}
 			}
 		}
-		
-		this.version = 'α1.2.1';
-		
-		if (data ? !data.version : false) {
-			clearAll();
-			game = new Game();
-			firstTime();
-			save();
-		} else {
+			
 			this.starttime = data ? (new Date(data.starttime) || new Date()) : new Date();	
 			this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
 			this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
