@@ -96,7 +96,7 @@ hr {
 #autodiv {
 	min-width: 100%;
 	width: max-content;
-	height: 100%;
+	height: auto;
 	overflow-x: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
@@ -141,7 +141,7 @@ hr {
 
 .auto {
 	width: 200px;
-	height: 100%;
+	height: auto;
 	float: left;
 }
 

@@ -9,25 +9,16 @@ class Game {
 				}
 			}
 		}
-		
-		this.version = 'α1.2.1';
-		
-		if (data ? !data.version : false) {
-			clearAll();
-			game = new Game();
-			firstTime();
-			save();
-		} else {
-			this.starttime = data ? (new Date(data.starttime) || new Date()) : new Date();	
-			this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
-			this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
 			
-			this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);	
-			this.state = 0;
-			
-			this.automaxall = data ? (data.automaxall || []) : [];
-			this.autoprestige = data ? (data.autoprestige || []) : [];
-		}
+		this.starttime = data ? (new Date(data.starttime) || new Date()) : new Date();	
+		this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
+		this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
+		
+		this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);	
+		this.state = 0;
+		
+		this.automaxall = data ? (data.automaxall || []) : [];
+		this.autoprestige = data ? (data.autoprestige || []) : [];
 	}
 	
 	update() {
@@ -170,7 +161,12 @@ class Layer {
 			this.str_loc == joa([0]) ? this.incPoints(p) : this.incPower(p);
 		} else {
 			for (let d of this.dims) {
-				let p = d.mult.mul(d.amount).div(20);
+				let p;
+				if (game.state == 0) {
+					p = d.mult.mul(d.amount).div(20);
+				} else {
+					p = d.mult;
+				}
 				let dm = d.dim;
 				if (dm.eq(0)) {
 					this.str_loc == joa([0]) ? this.incPoints(p) : this.incPower(p);
@@ -183,7 +179,7 @@ class Layer {
 	
 	maxAll() {
 		if (this.maxAllCooldown == 0) {
-			if (this.dims.length >= 3) {
+			if (this.dims.length >= 3 && this.dims[this.dims.length - 1].dim.gte(10)) {
 				let x = this.dims[2].dim;
 				let val = x.pow(1.1);
 				if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
@@ -200,13 +196,14 @@ class Layer {
 							let val = x.add(10);
 							if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
 								this.dims.push(new Dimension(val, this.loc, 1, 1));
+							} else {
+								for (let d of this.dims) {
+								d.buy();
+								d.buyMax();
+								}
 							}
 						}
 					}
-				}
-				for (let d of this.dims) {
-					d.buy();
-					d.buyMax();
 				}
 			} else {
 				for (let d of this.dims) {
@@ -214,7 +211,7 @@ class Layer {
 					d.buyMax();
 				}
 			}
-			this.maxAllCooldown = 3;
+			this.maxAllCooldown = 2;
 		}
 	}
 	
@@ -254,10 +251,14 @@ class Dimension {
 	}
 	
 	get price() {
-		if (this.dim.isint()) {
-			return OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim.mul(0.9), this.dim.add(1).mul(this.bought.add(1)));
+		if (game.state == 0) {
+			if (this.dim.isint()) {
+				return OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim.mul(0.9), this.dim.add(1).mul(this.bought.add(1)));
+			} else {
+				return OmegaNum(0);
+			}
 		} else {
-			return OmegaNum(0);
+			return OmegaNum.pow(10, this.dim);
 		}
 	}
 	

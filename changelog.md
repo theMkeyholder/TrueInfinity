@@ -2,6 +2,10 @@
 
 ## α1.2
 
+### α1.2.2
+* **HUGE** Performance increase (I used shotcuts to achieve this, so slightly less accurate calculation, but who cares?)
+* Slowed down the early game
+
 ### α1.2.1
 * You can now have more than 1.79e308 prestige layers
 * Prestige locations stored as OmegaNums
