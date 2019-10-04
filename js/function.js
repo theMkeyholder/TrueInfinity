@@ -23,11 +23,20 @@ function l(str) {
 }
 
 function secretFormula(tslp, dim, amount, mult) {
-	let prod = amount.mul(mult.mul(dim));
-	let x = new OmegaNum(tslp).mul(prod).div(20).floor();
-	let y = dim.floor();
-	let z = OmegaNum.choose(x, y).pow(0.5);
-	return !z.eq(1) ? z : x.mul(y.factorial());
+	if (game.state == 0) {
+		try {
+			let prod = OmegaNum.mul(dim, mult);
+			let x = new OmegaNum(tslp).mul(prod).div(20).floor();
+			let y = dim.floor();
+			let z = OmegaNum.choose(x, y).pow(0.5);
+			return !z.eq(1) ? z : x.mul(y.factorial());
+		} catch(e) {
+			console.warn(e);
+			return n(0);
+		}
+	} else {
+		return mult;
+	}
 }
 
 function createDiv(parentId, thisId, classes = '') {
@@ -118,17 +127,24 @@ function toggleas() {
 const THRESHOLD = OmegaNum(1.79e308);
 
 function getPrestigeGain(num) {
-	num = num.max(1e3);
-	let steps = num.logBase(THRESHOLD).sub(1);
-	let gens = num.log10().logBase(2);
-	let pow = steps.div(gens).mul(8);
-	return OmegaNum.floor(OmegaNum.pow(10, pow)) || n(0);
+	if (game.state == 0) {
+		num = num.max(1e3);
+		let steps = num.logBase(THRESHOLD).sub(1);
+		let gens = num.log10().logBase(2);
+		let pow = steps.div(gens).mul(8);
+		return OmegaNum.floor(OmegaNum.pow(10, pow)) || n(0);
+	} else {
+		num = num.max(1e3);
+		let steps = num.log10();
+		let pow = steps.div(num.log10().logBase(2));
+		return OmegaNum.pow(10, pow) || n(0);
+	}
 }
 
 function getPrestigeGain2(num, diff) {
 	let x = getPrestigeGain(num);
 	if (!x.eq(0)) {
-		return x.logBase(diff).pow(4);
+		return x.log10().root(diff).pow(4);
 	}
 	return n(0);
 }
@@ -189,7 +205,7 @@ function getMult(loc) {
 			temp[0] = i;
 			let temp2 = JSON.stringify(temp);
 			if (!game.prestige[temp2].power.eq(0)) {
-				x = OmegaNum.mul(game.prestige[temp2].power.pow(i.sub(loc[0]).eq(1) ? i.sub(loc[0]) : i.sub(loc[0]).mul(10)), x);
+				x = OmegaNum.mul(game.prestige[temp2].power.pow(i.sub(loc[0]).eq(1) ? i.sub(loc[0]).mul(4) : i.sub(loc[0]).mul(10)), x);
 			}
 		}
 	} else {
@@ -301,3 +317,13 @@ function oa(loc) {
 function joa(loc) {
 	return j(oa(loc));
 }
+
+function getBulkPrestige() {
+	if (game.state == 1) {
+		
+	}
+}
+
+// function getMaxPrestige() {
+	// console.log(f(game.prestige[joa('[0]')].points), f(game.max_layer[0]));
+// }
