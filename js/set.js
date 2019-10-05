@@ -18,7 +18,7 @@ function setElems() {
 		}
 		if (getPrestigeGain(p.points).gt(0) || getPrestigeGain2(p.points, game.max_layer[0] - p.loc[0]).gt(0)) {
 			setdisp('pb' + JSON.stringify(p.loc), 'inline-block');
-		} else if (p.points.lt(1.79e308) && game.state == 0) {
+		} else if (p.points.lt(1.79e308)) {
 			hide('pb' + JSON.stringify(p.loc));
 		}
 		if (game.state == 0 || p.str_loc == JSON.stringify(game.max_layer)) {
@@ -62,7 +62,7 @@ function setElems() {
 	
 	setElem('stats', `
 		You have ${f(game.prestige[joa([0])].points)} antimatter<br>
-		Your best prestige layer is ${JSON.stringify(game.max_layer) == '[0]' ? '...oh, you haven\'t prestiged yet' : getLayerName(game.max_layer)}<br>
+		Your best prestige layer is ${JSON.stringify(game.max_layer) == joa([0]) ? '...oh, you haven\'t prestiged yet' : getLayerName(game.max_layer)}<br>
 		You have spent ${game.disp_time} in game
 	`);
 	
@@ -71,14 +71,53 @@ function setElems() {
 		show('autodiv');
 		hide('autolock');
 		
+		show('autoauto');
+		if (game.max_layer[0].gte(199)) {
+			show('autobulkdiv');
+			hide('autobulklock');
+			setElem('buybulkauto', 'Increase Auto Prestige Level: ' + (game.bulk_level < 5 ? game.BULK_PRICES[game.bulk_level] + ' antimatter' : 'N/A'));
+			if (game.bulk_level >= 5) {
+				document.getElementById('buybulkauto').className = document.getElementById('buybulkauto').className.replace('red', 'blue').replace('green', 'blue');
+			} else {
+				if (game.prestige[joa([0])].points.gte(game.BULK_PRICES[game.bulk_level])) {
+					document.getElementById('buybulkauto').className = document.getElementById('buybulkauto').className.replace('red', 'green');
+				} else {
+					document.getElementById('buybulkauto').className = document.getElementById('buybulkauto').className.replace('green', 'red');
+				}
+			}
+			for (let i = 0; i < 5; i++) {
+				if (game.bulk_level > i) {
+					document.getElementById('ll' + i).className = document.getElementById('ll' + i).className.replace('red', 'green');
+				} else {
+					document.getElementById('ll' + i).className = document.getElementById('ll' + i).className.replace('green', 'red');
+				}
+			}
+		} else {
+			hide('autobulkdiv');
+			setdisp('autobulklock', 'inline-block');
+		}
+		
 		show('mt4');
 		hide('mt4alt');
 	} else {
 		hide('autodiv');
+		hide('autobulkdiv');
+		hide('autobulklock');
+		hide('autoauto');
 		setdisp('autolock', 'inline-block');
 		
 		hide('mt4');
 		setdisp('mt4alt', 'inline-block');
+	}
+	
+	if (game.autoauto) {
+		document.getElementById('autoauto').className = document.getElementById('autoauto').className.replace('red', 'blue').replace('green', 'blue');
+	} else {
+		if (game.prestige[joa([0])].points.gt('eee100')) {
+			document.getElementById('autoauto').className = document.getElementById('autoauto').className.replace('red', 'green');
+		} else {
+			document.getElementById('autoauto').className = document.getElementById('autoauto').className.replace('green', 'red');
+		}
 	}
 	
 	for (let p2 in game.prestige) {

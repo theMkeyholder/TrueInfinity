@@ -156,3 +156,21 @@ hr {
 .mt4 {
 	display: none;
 }
+
+.horizflex {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.levellight {
+	flex-basis: 200px;
+	flex-grow: 0;
+	height: 40px;
+	border-width: 5px;
+	border-style: solid;
+	border-radius: 5px;
+	display: inline-block;
+	line-height: 40px;
+}

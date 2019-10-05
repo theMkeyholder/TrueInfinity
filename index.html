@@ -2,20 +2,20 @@
 <html>
 	<head>
 		<title>True Infinity</title>
-
+		
 		<link href='css/styled_buttons.css' rel='stylesheet'></link>
 		<link href='css/stylesheet.css' rel='stylesheet'></link>
 		<link href='assets/img/favicon.png' rel='icon'></link>
-
+		
 		<link href='css/default.css' rel='stylesheet'></link>
-
+		
 		<meta charset="UTF-8">
 		<meta name="description" content="More Infinite than Any Game to Date!" />
 		<meta name="keywords" content="Idle,Game,Indie,True,Infinity,Incremental" />
 		<meta name="author" content="Reinhardt (Logan McDonald)" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="google-site-verification" content="x4dhb8CYA-CckrCCj2Mc0qbrX6Yw9WmxAZieFdIQjQk" />
-
+		
 		<script src='js/OmegaNum.js'></script>
 		<script src='js/notation.js'></script>
 		<script src='js/main.js'></script>
@@ -24,7 +24,7 @@
 		<script src='js/create.js'></script>
 		<script src='js/function.js'></script>
 		<script src='js/automation.js'></script>
-
+		
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146664738-1"></script>
 		<script>
@@ -41,22 +41,27 @@
 		</div>
 		<div id='game'>
 			<div id='topbar'>
-				<p style='float: left;' style='width: 250px'>True Infinity | α1.2.2 | Reinhardt | FPS:</p><p id='fps' style='width: 20px; margin: 0; display: inline; float: left'></p>
-
+				<p style='float: left;' style='width: 250px'>True Infinity | α1.3.1 | Reinhardt | FPS:</p><p id='fps' style='width: 20px; margin: 0; display: inline; float: left'></p>
+				
 				<marquee style='float: left; display: inline-block; width: calc(100vw - 550px); margin-left: 7.5px; margin-right: 7.5px;'>
 					This game only works on computers, sorry mobile/tablet users :(
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					If you've played before and the game isn't loading, go to options and hard
-					reset, sorry folks.
+					&nbsp;
+					Welcome to True Infinity, a totally balanced game with slow progression. If you consider slow progression to be past eee10 in 30 minutes.
+					&nbsp;
+					If you've played before and the game isn't loading, go to options and hard reset, sorry folks.
+					&nbsp;
+					I like big numbers.
+					&nbsp;
+					Thanks to ShianaraPlayZ for testing this game since only a week after I started development! You've been a big encouragement to sit here and code for 8 hours a day instead of doing other things with my school holidays.
 				</marquee>
-
+				
 				<span style='float: right; width: 260px;'>
 					|&nbsp;<a href='html/about.html'>How to Play</a>
 					<a href='html/patch_notes.html'>Patch Notes</a>
 					<a href='html/source.html'>Source Code</a>
 				</span>
 			</div>
-
+			
 			<div id='sidebar'>
 				<button id='toggleSB' class='sbb' onclick='toggleSB()'>>></button>
 				<br><br>
@@ -68,7 +73,7 @@
 				<button id='mt4' class='mt sbb yellow mt4' onclick='mt(4)'>Au</button>
 				<p id='credit'></p>
 			</div>
-
+			
 			<div id='main'>
 				<div id='mtb0' class='maintab'>
 					<div id='layerswrapper'>
@@ -98,6 +103,19 @@
 					<div id='autodiv'>
 					</div>
 					<hr>
+					<button id='autoauto' class='sbb red' onclick='buyautoauto()'>Automate Purchasing of Automation: ee1e100 antimatter</button>
+					<hr>
+					<img id='autobulklock' src='assets/img/locked.png' title='This feature is locked until you reach p200' alt='This feature is locked until you reach p200' style='margin-top: 25px;' width='256' height='256'>
+					<div id='autobulkdiv'>
+						<button id='buybulkauto' class='sbb red' onclick='buybulkprestige()'>Increase Auto Prestige Level:</button>
+						<div class='horizflex'>
+							<div id='ll0' class='levellight red'>Level 1</div>
+							<div id='ll1' class='levellight red'>Level 2</div>
+							<div id='ll2' class='levellight red'>Level 3</div>
+							<div id='ll3' class='levellight red'>Level 4</div>
+							<div id='ll4' class='levellight red'>Level 5</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

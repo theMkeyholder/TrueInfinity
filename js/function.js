@@ -127,24 +127,26 @@ function toggleas() {
 const THRESHOLD = OmegaNum(1.79e308);
 
 function getPrestigeGain(num) {
+	if (num.lt(THRESHOLD)) {
+		return n(0);
+	}
 	if (game.state == 0) {
 		num = num.max(1e3);
 		let steps = num.logBase(THRESHOLD).sub(1);
 		let gens = num.log10().logBase(2);
 		let pow = steps.div(gens).mul(8);
-		return OmegaNum.floor(OmegaNum.pow(10, pow)) || n(0);
+		return OmegaNum.pow(10, pow).floor() || n(0);
 	} else {
 		num = num.max(1e3);
 		let steps = num.log10();
-		let pow = steps.div(num.log10().logBase(2));
-		return OmegaNum.pow(10, pow) || n(0);
+		return OmegaNum.pow(1.001, steps).floor() || n(0);
 	}
 }
 
 function getPrestigeGain2(num, diff) {
 	let x = getPrestigeGain(num);
 	if (!x.eq(0)) {
-		return x.log10().root(diff).pow(4);
+		return game.autoauto ? x.log10() : x.log10().root(diff);
 	}
 	return n(0);
 }
@@ -199,7 +201,7 @@ function cmpLayer(loc1, loc2) {
 function getMult(loc) {
 	let x = n(1);
 	if (cmpLayer(game.max_layer, oa([7])) < 0) {
-		for (let i = loc[0] + 1; i < game.max_layer[0].toNumber() + 1; i++) {
+		for (let i = loc[0].add(1); i < game.max_layer[0].toNumber() + 1; i++) {
 			i = n(i)
 			let temp = oa(loc);
 			temp[0] = i;
@@ -253,11 +255,13 @@ function getLayerName(loc) {
 }
 
 function maxAll(loc) {
-	game.prestige[JSON.stringify(loc)].maxAll();
+	if (game.prestige[JSON.stringify(loc)]) {
+		game.prestige[JSON.stringify(loc)].maxAll();
+	}
 }
 
 function autoPrestigeGain(loc) {
-	let gain = game.state == 0 ? getPrestigeGain(game.prestige[JSON.stringify(loc)].points).div(1000000).floor() : getPrestigeGain2(game.prestige[JSON.stringify(loc)].points, game.max_layer[0].sub(loc[0])).div(1000000).floor();
+	let gain = game.state == 0 ? getPrestigeGain(game.prestige[JSON.stringify(loc)].points).div(1000000).floor() : getPrestigeGain2(game.prestige[JSON.stringify(loc)].points, game.max_layer[0].sub(loc[0])).floor();
 	if (!gain.eq(0) && gain.isint()) {
 		let arr;
 		if (game.state == 0) {
@@ -272,10 +276,14 @@ function autoPrestigeGain(loc) {
 }
 
 function auto_max_cost(loc) {
-	let x = oa(loc);
-	x[0] = x[0].add(1);
-	x[0] = x[0].mul(10);
-	return new OmegaNum(x).tetr(2);
+	try {
+		let x = oa(loc);
+		x[0] = x[0].add(1);
+		x[0] = x[0].mul(10);
+		return new OmegaNum(x).tetr(2);
+	} catch(e) {
+		return new OmegaNum(Infinity);
+	}
 }
 
 function afford_auto_max(loc) {
@@ -283,7 +291,7 @@ function afford_auto_max(loc) {
 }
 
 function buy_auto_max(loc) {
-	if (afford_auto_max(loc)) {
+	if (afford_auto_max(loc) && !game.prestige[JSON.stringify(loc)].is_auto_max) {
 		game.automaxall.push(loc);
 		game.prestige[JSON.stringify(loc)].subPoints(auto_max_cost(loc));
 		game.prestige[JSON.stringify(loc)].is_auto_max = true;
@@ -299,7 +307,7 @@ function afford_auto_prestige(loc) {
 }
 
 function buy_auto_prestige(loc) {
-	if (afford_auto_prestige(loc)) {
+	if (afford_auto_prestige(loc) && !game.prestige[JSON.stringify(loc)].is_auto_prestige) {
 		game.autoprestige.push(loc);
 		game.prestige[JSON.stringify(loc)].subPoints(auto_prestige_cost(loc));
 		game.prestige[JSON.stringify(loc)].is_auto_prestige = true;
@@ -318,12 +326,53 @@ function joa(loc) {
 	return j(oa(loc));
 }
 
-function getBulkPrestige() {
-	if (game.state == 1) {
-		
+function buyautoauto() {
+	if (!game.autoauto && game.prestige[joa([0])].points.gt('eee100')) {
+		game.autoauto = true;
 	}
 }
 
-// function getMaxPrestige() {
-	// console.log(f(game.prestige[joa('[0]')].points), f(game.max_layer[0]));
-// }
+function buybulkprestige() {
+	let n = game.bulk_level;
+	let p = game.BULK_PRICES;
+	
+	if (game.prestige[joa([0])].points.gte(p[n])) {
+		game.bulk_level++
+	}
+}
+
+function bulkPrestige() {
+	let p = game.prestige[j(game.max_layer)].points;
+	let m = game.max_layer[0];
+	if (game.state == 1) {
+		if (n(10).pow(getPrestigeGain2(p, m.pow(1.1).floor().sub(m)).gt(auto_max_cost([m.pow(1.1).floor()]))) && game.bulk_level > 4) {
+			let gain = n(10).pow(getPrestigeGain2(p, m.pow(1.1).floor().sub(m)));
+			game.prestige[j([m.pow(1.1).floor()])] = new Layer([m.pow(1.1).floor()], gain.mul(10));
+			game.max_layer = [m.pow(1.1).floor()];
+		} else {
+			if (n(10).pow(getPrestigeGain2(p, m.mul(1.1).floor().sub(m)).gt(auto_max_cost([m.mul(1.1).floor()]))) && game.bulk_level > 3) {
+				let gain = n(10).pow(getPrestigeGain2(p, m.mul(1.1).floor().sub(m)));
+				game.prestige[j([m.mul(1.1).floor()])] = new Layer([m.mul(1.1).floor()], gain.mul(10));
+				game.max_layer = [m.mul(1.1).floor()];
+			} else {
+				if (n(10).pow(getPrestigeGain2(p, m.add(100).floor().sub(m)).gt(auto_max_cost([m.add(100).floor()])))&& game.bulk_level > 2) {
+					let gain = n(10).pow(getPrestigeGain2(p, m.add(100).floor().sub(m)));
+					game.prestige[j([m.add(100).floor()])] = new Layer([m.add(100).floor()], gain.mul(10));
+					game.max_layer = [m.add(100).floor()];
+				} else {
+					if (n(10).pow(getPrestigeGain2(p, m.add(10).floor().sub(m)).gt(auto_max_cost([m.add(10).floor()]))) && game.bulk_level > 1) {
+						let gain = n(10).pow(getPrestigeGain2(p, m.add(10).floor().sub(m)));
+						game.prestige[j([m.add(10).floor()])] = new Layer([m.add(10).floor()], gain.mul(10));
+						game.max_layer = [m.add(10).floor()];
+					} else {
+						if (n(10).pow(getPrestigeGain2(p, m.add(1).floor().sub(m))).gt(auto_max_cost([m.add(1).floor()])) && game.bulk_level > 0) {
+							let gain = n(10).pow(getPrestigeGain2(p, m.add(1).floor().sub(m)));
+							game.prestige[j([m.add(1).floor()])] = new Layer([m.add(1).floor()], gain.mul(1));
+							game.max_layer = [m.add(1).floor()];
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -111,8 +111,8 @@ function loop() {
 }
 
 function fps() {
-	var thisFrameTime = (thisLoop=new Date) - lastLoop;
-	frameTime+= (thisFrameTime - frameTime) / filterStrength;
+	var thisFrameTime = (thisLoop = new Date) - lastLoop;
+	frameTime += (thisFrameTime - frameTime) / filterStrength;
 	lastLoop = thisLoop;
 	fpsOut.innerHTML = (1000 / frameTime).toFixed(0);
 }

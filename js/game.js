@@ -17,8 +17,13 @@ class Game {
 		this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);	
 		this.state = 0;
 		
-		this.automaxall = data ? (data.automaxall || []) : [];
-		this.autoprestige = data ? (data.autoprestige || []) : [];
+		this.automaxall = data ? (data.automaxall.map(e => oa(e)) || []) : [];
+		this.autoprestige = data ? (data.autoprestige.map(e => oa(e)) || []) : [];
+		this.autoauto = data ? (data.autoauto || false) : false;
+		
+		this.bulk_level = data ? (data.bulk_level || 0) : 0;
+		this.BULK_PRICES = ['eee500', 'eee3000', 'eee8000', 'eee50000', 'eeee10', 'Infinity'];
+		this.bulk_cooldown = 0;
 	}
 	
 	update() {
@@ -162,7 +167,7 @@ class Layer {
 		} else {
 			for (let d of this.dims) {
 				let p;
-				if (game.state == 0) {
+				if (game.state == 0 || this.dims[this.dims.length - 1].dim.lt(10)) {
 					p = d.mult.mul(d.amount).div(20);
 				} else {
 					p = d.mult;
@@ -189,17 +194,22 @@ class Layer {
 					if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
 						this.dims.push(new Dimension(val, this.loc, 1, 1));
 					} else {
-						let val = x.add(100);
+						let val = x.add(1000);
 						if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
 							this.dims.push(new Dimension(val, this.loc, 1, 1));
 						} else {
-							let val = x.add(10);
+							let val = x.add(100);
 							if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
 								this.dims.push(new Dimension(val, this.loc, 1, 1));
 							} else {
-								for (let d of this.dims) {
-								d.buy();
-								d.buyMax();
+								let val = x.add(10);
+								if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
+									this.dims.push(new Dimension(val, this.loc, 1, 1));
+								} else {
+									for (let d of this.dims) {
+									d.buy();
+									d.buyMax();
+									}
 								}
 							}
 						}
@@ -211,7 +221,7 @@ class Layer {
 					d.buyMax();
 				}
 			}
-			this.maxAllCooldown = 2;
+			this.maxAllCooldown = 3;
 		}
 	}
 	
@@ -252,13 +262,9 @@ class Dimension {
 	
 	get price() {
 		if (game.state == 0) {
-			if (this.dim.isint()) {
-				return OmegaNum.pow(this.dim.lt(100) ? 10 : this.dim.mul(0.9), this.dim.add(1).mul(this.bought.add(1)));
-			} else {
-				return OmegaNum(0);
-			}
+			return OmegaNum.pow(this.dim.floor().lt(100) ? 10 : this.dim.mul(0.9).floor(), this.dim.add(1).mul(this.bought.add(1)));
 		} else {
-			return OmegaNum.pow(10, this.dim);
+			return OmegaNum.pow(10, this.dim.add(1).mul(this.bought.add(1)));
 		}
 	}
 	

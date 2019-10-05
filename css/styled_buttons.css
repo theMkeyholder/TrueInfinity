@@ -41,37 +41,37 @@
 	width: 42.5%;
 }
 
-.sbb.grey {
+.grey {
 	background-color: darkgrey;
 	border-color: grey;
 }
 
-.sbb.blue {
+.blue {
 	background-color: mediumslateblue;
 	border-color: #392759;
 }
 
-.sbb.green {
+.green {
 	background-color: #B5DDA4;
 	border-color: #4DAA57;
 }
 
-.sbb.red {
+.red {
 	background-color: pink;
 	border-color: darkred;
 }
 
-.sbb.brown {
+.brown {
 	background-color: #513C2C;
 	border-color: #28190E;
 }
 
-.sbb.aqua {
+.aqua {
 	background-color: #ACEDFF;
 	border-color: #89BBFE;
 }
 
-.sbb.yellow {
+.yellow {
 	background-color: #FFD151;
 	border-color: #F8C537;
 }
