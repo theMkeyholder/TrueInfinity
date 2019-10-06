@@ -42,8 +42,8 @@
 			
 			
 			<div>
-				<button id='s0b' class='toggle sbb blue half'>Antimatter</button>
-				<div id='s0d' class='div hidden'>
+				<button class='toggle sbb blue half'>Antimatter</button>
+				<div class='div hidden'>
 					Antimatter is the primary currency in
 					True Infinity, as True Infinity is a
 					knockoff of Infinite Layers (but with
@@ -55,14 +55,14 @@
 					work with it anymore. At this point you
 					can say that you beat the game. At the
 					moment that would take you approximately
-					{10, {10, 16}, 1000} (BEAF) years to do 
+					{10, {10, 16}, 1000} (BAN) years to do 
 					so good luck!!
 				</div>
 			</div>
 			
 			<div>
-				<button id='s1b' class='toggle sbb blue half'>Dimensions</button>
-				<div id='s1d' class='div hidden'>
+				<button class='toggle sbb blue half'>Dimensions</button>
+				<div class='div hidden'>
 					Dimensions are what produce your resources
 					in True Infinity. The First Dimension produces
 					antimatter, the Second Dimension produces First
@@ -79,8 +79,19 @@
 			</div>
 			
 			<div>
-				<button id='s2b' class='toggle sbb blue half'>Prestige</button>
-				<div id='s2d' class='div hidden'>
+				<button class='toggle sbb blue half'>Max All</button>
+				<div class='div hidden'>
+					Max All is your best friend. It allows you to buy
+					max many dimensions at once, and unlock more dimensions
+					far more quickly, letting you buy several thousands,
+					or billions of dimensions at a time. You can automate
+					the Max All later in the game.
+				</div>
+			</div>
+			
+			<div>
+				<button class='toggle sbb blue half'>Prestige</button>
+				<div class='div hidden'>
 					Once you reach 1.79e308 antimatter you will be
 					able to infinity. This will give you a certain
 					number of infinity points, set your antimatter
@@ -93,8 +104,8 @@
 			</div>
 			
 			<div>
-				<button id='s3b' class='toggle sbb blue half'>Points</button>
-				<div id='s3d' class='div hidden'>
+				<button class='toggle sbb blue half'>Points</button>
+				<div class='div hidden'>
 					Upon prestiging you will get some points for that
 					prestige layer. You can use these points to buy
 					that layers dimensions. Same thing as for regular
@@ -104,8 +115,8 @@
 			</div>
 			
 			<div>
-				<button id='s4b' class='toggle sbb blue half'>Power</button>
-				<div id='s4d' class='div hidden'>
+				<button class='toggle sbb blue half'>Power</button>
+				<div class='div hidden'>
 					A layers dimensions make that layers power. Power
 					provides a multiplier boost to all layers below it.
 					For the first layer below it, the boost is equal to
@@ -116,8 +127,8 @@
 			</div>
 			
 			<div>
-				<button id='s5b' class='toggle sbb blue half'>Automation</button>
-				<div id='s5d' class='div hidden'>
+				<button class='toggle sbb blue half'>Automation</button>
+				<div class='div hidden'>
 					Once you Celerity (7th layer of prestige) you unlock
 					the automation tab. You can then spend that layers
 					points on automating the max-all button and getting
@@ -128,13 +139,47 @@
 					is far more expensive than the max all automation.
 				</div>
 			</div>
+			
+			<div>
+				<button class='toggle sbb blue half'>Automation of Automation</button>
+				<div class='div hidden'>
+					Once you reach eee100 antimatter, you can automate
+					the process of auto-max all and auto-prestige. This
+					lets you click your way to high prestige layers, and
+					automatically be able to max all for the higer layers.
+				</div>
+			</div>
+			
+			<div>
+				<button class='toggle sbb blue half'>Auto Prestige</button>
+				<div class='div hidden'>
+					Once you reach P200 (the 200th prestige layer) you can
+					unlock Auto-Prestige (seperate from Auto-Prestige Gain
+					mentioned above) for eee500 antimatter. Auto-Prestige 
+					unlocks new layers for you. 
+				</div>
+			</div>
+			
+			<div>
+				<button class='toggle sbb blue half'>Bulk Prestige</button>
+				<div class='div hidden'>
+					You can reach the next level of auto prestige for
+					eee3000 antimatter, at this level the auto prestige
+					unlocks 10 layers at a time. The next level costs
+					eee8000 and unlocks 100 layers at a time. Level 4
+					costs eee50000 and unlocks layers at 1.1 times the
+					layer number of your highest layer. Level 5 is very
+					powerful and costs eeee10 antimatter, but unlocks
+					layers at your highest layer to the power of 1.1;
+				</div>
+			</div>
 		</div>
 		
 		<script>
 			let nl = document.querySelectorAll('.toggle');
 			for (let i = 0; i < nl.length; i++) {
 				let n = nl[i];
-				n.onclick = () => {document.getElementById(n.id.replace('b', 'd')).classList.toggle('hidden')};
+				n.onclick = () => {n.parentNode.childNodes[3].classList.toggle('hidden')};
 			}
 		</script>
 	</body>
