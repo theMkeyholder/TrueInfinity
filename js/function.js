@@ -280,7 +280,7 @@ function auto_max_cost(loc) {
 		let x = oa(loc);
 		x[0] = x[0].add(1);
 		x[0] = x[0].mul(10);
-		return new OmegaNum(x).tetr(2);
+		return new OmegaNum(x[0]).tetr(2);
 	} catch(e) {
 		return new OmegaNum(Infinity);
 	}
@@ -303,7 +303,7 @@ function auto_prestige_cost(loc) {
 }
 
 function afford_auto_prestige(loc) {
-	return game.prestige[JSON.stringify(loc)].points.gte(auto_prestige_cost(loc));
+	return game.prestige[JSON.stringify(loc)].points.round().gte(auto_prestige_cost(loc).round());
 }
 
 function buy_auto_prestige(loc) {
