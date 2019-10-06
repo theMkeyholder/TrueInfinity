@@ -3,6 +3,10 @@
 ## α1.3
 
 ### α1.3.1
+* Fix auto prices in late(ish) game
+* Fix other bugs
+
+### α1.3.1
 * Update Patch Notes / Changelog
 * Update How to Play page
 * Fix autoauto button
