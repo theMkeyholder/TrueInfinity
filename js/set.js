@@ -63,7 +63,7 @@ function setElems() {
 	setElem('stats', `
 		You have ${f(game.prestige[joa([0])].points)} antimatter<br>
 		Your best prestige layer is ${JSON.stringify(game.max_layer) == joa([0]) ? '...oh, you haven\'t prestiged yet' : getLayerName(game.max_layer)}<br>
-		You have spent ${game.disp_time} in game
+		You have played for ${game.disp_time}
 	`);
 	
 	// Automation Unlock
@@ -71,7 +71,7 @@ function setElems() {
 		show('autodiv');
 		hide('autolock');
 		
-		show('autoauto');
+		setdisp('autoauto', 'inline-block');
 		if (game.max_layer[0].gte(199)) {
 			show('autobulkdiv');
 			hide('autobulklock');

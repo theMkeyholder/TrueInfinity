@@ -1,5 +1,20 @@
 # α
 
+## α1.3
+
+### α1.3.1
+* Update Patch Notes / Changelog
+* Update How to Play page
+* Fix autoauto button
+
+### α1.3.0
+* More performance increases
+* Automation of purchasing of automation
+* Automated prestige
+* Automated bulk prestige
+* Past Incremental Unlimited, up to eeeee42!
+* More messages in the topbar
+
 ## α1.2
 
 ### α1.2.2
