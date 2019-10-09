@@ -57,9 +57,9 @@ function setElems() {
 		document.getElementById('as').className = document.getElementById('as').className.replace('green', 'red');
 		hide('asintvp');
 	}
-	
+
 	game.notation = document.getElementById('notation').value;
-	
+
 	// Statistics
 	
 	setElem('stats', `

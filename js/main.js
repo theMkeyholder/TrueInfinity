@@ -96,6 +96,7 @@ function init() {
 	
 	document.getElementById('asintv').value = game.asintv;
 	document.getElementById('notation').value = game.notation;
+
 	setInterval(loop, 50);
 }
 
