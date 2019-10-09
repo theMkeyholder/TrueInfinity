@@ -375,4 +375,19 @@ function bulkPrestige() {
 			}
 		}
 	}
+
+}
+
+function tabs() {
+	mt(0);
+	ot(0);
+}
+
+function ot(n) {
+	let nl = document.querySelectorAll('.optiontab');
+	for (let i = 0; i < nl.length; i++) {
+		let nd = nl[i];
+		nd.style.display = 'none';
+	}
+	document.querySelector('#otb' + n).style.display = 'block'; 
 }

@@ -57,7 +57,9 @@ function setElems() {
 		document.getElementById('as').className = document.getElementById('as').className.replace('green', 'red');
 		hide('asintvp');
 	}
-	
+
+	game.notation = document.getElementById('notation').value;
+
 	// Statistics
 	
 	setElem('stats', `
@@ -75,7 +77,7 @@ function setElems() {
 		if (game.max_layer[0].gte(199)) {
 			show('autobulkdiv');
 			hide('autobulklock');
-			setElem('buybulkauto', 'Increase Auto Prestige Level: ' + (game.bulk_level < 5 ? game.BULK_PRICES[game.bulk_level] + ' antimatter' : 'N/A'));
+			setElem('buybulkauto', 'Increase Auto Prestige Level: ' + (game.bulk_level < 5 ? f(n(game.BULK_PRICES[game.bulk_level])) + ' antimatter' : 'N/A'));
 			if (game.bulk_level >= 5) {
 				document.getElementById('buybulkauto').className = document.getElementById('buybulkauto').className.replace('red', 'blue').replace('green', 'blue');
 			} else {

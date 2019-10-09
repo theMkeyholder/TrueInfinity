@@ -17,12 +17,24 @@
 	height: 30px;
 }
 
-.sbb.height:hover {
+.sbb.half.x2 {
+	height: 60px;
+}
+
+.sbb.height:hover:not(x2) {
 	height: 28px;
 }
 
-.sbb.height:active {
+.sbb.height:active:not(x2) {
 	height: 25px;
+}
+
+.sbb.height.x2:hover {
+	height: 56px;
+}
+
+.sbb.height.x2:active {
+	height: 50px;
 }
 
 .sbb:hover:not(.height):not(.half) {

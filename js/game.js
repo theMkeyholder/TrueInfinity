@@ -14,6 +14,8 @@ class Game {
 		this.asintv = data ? (JSON.parse(data.asintv) || 10) : 10;
 		this.as = JSON.parse(data ? (JSON.stringify(data.as) || true) : true);
 		
+		this.notation = data ? (data.notation || 'sci') : 'sci';
+
 		this.max_layer = data ? (oa(data.max_layer) || oa([0])) : oa([0]);	
 		this.state = 0;
 		

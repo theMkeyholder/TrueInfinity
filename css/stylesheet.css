@@ -28,6 +28,15 @@ hr {
 	padding: 0;
 }
 
+marquee {
+	white-space: nowrap;
+}
+
+* {
+	word-wrap: break-all;
+	white-space: normal;
+}
+
 *:focus {
     outline: none;
 }
@@ -140,7 +149,7 @@ hr {
 }
 
 .auto {
-	width: 200px;
+	width: 190px;
 	height: auto;
 	float: left;
 }

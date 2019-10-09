@@ -35,13 +35,13 @@
 			gtag('config', 'UA-146664738-1');
 		</script>
 	</head>
-	<body onload='mt(0)'>
+	<body onload='tabs()'>
 		<div style='display: none;'>
 			<textarea id='expout'></textarea>
 		</div>
 		<div id='game'>
 			<div id='topbar'>
-				<p style='float: left;' style='width: 250px'>True Infinity | α1.3.2 | Reinhardt | FPS:</p><p id='fps' style='width: 20px; margin: 0; display: inline; float: left'></p>
+				<p style='float: left;' style='width: 250px'>True Infinity | α1.4.0 | Reinhardt | FPS:</p><p id='fps' style='width: 20px; margin: 0; display: inline; float: left'></p>
 				
 				<marquee style='float: left; display: inline-block; width: calc(100vw - 550px); margin-left: 7.5px; margin-right: 7.5px;'>
 					This game only works on computers, sorry mobile/tablet users :(
@@ -80,16 +80,33 @@
 					</div>
 				</div>
 				<div id='mtb1' class='maintab'>
-					<button id='save' class='sbb green' onclick='save()'>SAVE</button>
-					<button id='load' class='sbb aqua' onclick='load()'>LOAD</button>
-					<br><br>
-					<button id='as' class='sbb green' onclick='toggleas()'>AUTOSAVE</button>
-					<p id='asintvp'>Autosave every <input id='asintv'></input> seconds<p>
-					<br><br>
-					<button id='exp' class='sbb green' onclick='exp()'>EXPORT</button>
-					<button id='imp' class='sbb aqua' onclick='imp()'>IMPORT</button>
-					<br><br>
-					<button id='ws' class='sbb red' onclick='wipe()'>HARD RESET</button>
+					<button class='sbb aqua half height x2'onclick='ot(0)' >Save</button><button class='sbb aqua half height x2' onclick='ot(1)' >Other</button>
+					<hr><br><hr>
+					<div id='otb0' class='optiontab'>
+						<button id='save' class='sbb green' onclick='save()'>SAVE</button>
+						<button id='load' class='sbb aqua' onclick='load()'>LOAD</button>
+						<br><br>
+						<button id='as' class='sbb green' onclick='toggleas()'>AUTOSAVE</button>
+						<p id='asintvp'>Autosave every <input id='asintv'></input> seconds<p>
+						<br><br>
+						<button id='exp' class='sbb green' onclick='exp()'>EXPORT</button>
+						<button id='imp' class='sbb aqua' onclick='imp()'>IMPORT</button>
+						<br><br>
+						<button id='ws' class='sbb red' onclick='wipe()'>HARD RESET</button>
+					</div>
+					<div id='otb1' class='optiontab'>
+						<select id='notation' class='sbb aqua'>
+							<option value='sci'>Scientific Notation</option>
+							<option value='eng'>Engineering Notation</option>
+							<!-- <option value='stn'>Standard Notation</option> -->
+							<!-- <option value='msc'>Mixed Scientific Notation</option> -->
+							<!-- <option value='men'>Mixed Engineering Notation</option> -->
+							<option value='uar'>Up Arrow Notation</option>
+							<option value='chn'>Chained Arrow Notation</option>
+							<option value='ban'>Bird's Array Notation</option>
+							<option value='hyp'>Hyper E Notation</option>
+						</select>
+					</div>
 				</div>
 				<div id='mtb2' class='maintab'>
 					<div id='stats'>
