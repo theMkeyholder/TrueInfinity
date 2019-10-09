@@ -170,7 +170,7 @@ class Layer {
 			for (let d of this.dims) {
 				let p;
 				if (game.state == 0 || this.dims[this.dims.length - 1].dim.lt(10)) {
-					p = d ? d.mult.mul(d.amount).div(20) : n(0);
+					p = d.mult.mul(d.amount).div(20);
 				} else {
 					p = d.mult;
 				}
@@ -257,6 +257,8 @@ class Dimension {
 	get mult() {
 		if (game.prestige[this.str_loc]) {
 			return OmegaNum.pow(2, this.bought).mul(game.prestige[this.str_loc].mult);
+		} else {
+			return n(0);
 		}
 	}
 	
