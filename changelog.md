@@ -2,7 +2,11 @@
 
 ## α1.4
 
-### 1.4.1
+### α1.4.2
+* Fix bug I made in α1.4.1
+* Add Discord link
+
+### α1.4.1
 * Fix bug stopping new player from playing
 
 ### α1.4.0

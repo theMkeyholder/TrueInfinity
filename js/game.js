@@ -258,7 +258,7 @@ class Dimension {
 		if (game.prestige[this.str_loc]) {
 			return OmegaNum.pow(2, this.bought).mul(game.prestige[this.str_loc].mult);
 		} else {
-			return n(0);
+			return n(1);
 		}
 	}
 	
