@@ -104,17 +104,11 @@ function firstTime() {
 }
 
 function loop() {
-	try {
-		game.update();
-		setElems();
-		updatePrestiges();
-		auto();
-		fps();
-	} catch(e) {
-		console.warn(e);
-		console.warn('Wiping save to fix issue');
-		wipe();
-	}
+	game.update();
+	setElems();
+	updatePrestiges();
+	auto();
+	fps();
 }
 
 function fps() {
