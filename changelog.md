@@ -2,6 +2,9 @@
 
 ## α1.4
 
+### 1.4.1
+* Fix bug stopping new player from playing
+
 ### α1.4.0
 * Change to options interface
 * New notations:
