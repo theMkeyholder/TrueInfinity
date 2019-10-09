@@ -96,7 +96,6 @@ function init() {
 	
 	document.getElementById('asintv').value = game.asintv;
 	document.getElementById('notation').value = game.notation;
-
 	setInterval(loop, 50);
 }
 
@@ -105,11 +104,17 @@ function firstTime() {
 }
 
 function loop() {
-	game.update();
-	setElems();
-	updatePrestiges();
-	auto();
-	fps();
+	try {
+		game.update();
+		setElems();
+		updatePrestiges();
+		auto();
+		fps();
+	} catch(e) {
+		console.warn(e);
+		console.warn('Wiping save to fix issue');
+		wipe();
+	}
 }
 
 function fps() {

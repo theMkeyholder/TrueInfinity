@@ -1,4 +1,5 @@
 function f(num) {
+	// return N.sci(num);
 	return N[game.notation](num);
 }
 

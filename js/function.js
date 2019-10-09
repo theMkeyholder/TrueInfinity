@@ -375,7 +375,6 @@ function bulkPrestige() {
 			}
 		}
 	}
-
 }
 
 function tabs() {
