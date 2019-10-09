@@ -138,6 +138,8 @@ function setElems() {
 			}
 		}
 		
+		setElem('autoauto', `Automate Purchasing of Automation: ${f('eee100')}`);
+		
 		setElem('ap' + JSON.stringify(p.loc), `
 			Unlock Auto Prestige Gain<br>
 			Cost: ${f(auto_prestige_cost(p.loc))} ${JSON.stringify(p.loc) == '[0]' ? 'Antimatter' : getLayerName(p.loc).replace(/(^|[\s-])\S/g, function (match) {return match.toUpperCase()}) + ' Points'}

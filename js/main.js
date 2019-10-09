@@ -7,8 +7,15 @@ function save() {
 }
 
 // Clear the save file
-function wipe() {
-	if (confirm('Do you want to delete ALL of your progress?!?')) {
+function wipe(nc) {
+	if (!nc) {
+		if (confirm('Do you want to delete ALL of your progress?!?')) {
+			clearAll();
+			game = new Game();
+			firstTime();
+			save();
+		}
+	} else {
 		clearAll();
 		game = new Game();
 		firstTime();
@@ -90,8 +97,7 @@ function init() {
 	fpsOut = document.getElementById('fps');
 	
 	if (!load()) {
-		game = new Game();
-		firstTime();
+		wipe(true);
 	}
 	
 	document.getElementById('asintv').value = game.asintv;
@@ -104,17 +110,11 @@ function firstTime() {
 }
 
 function loop() {
-	try {
-		game.update();
-		setElems();
-		updatePrestiges();
-		auto();
-		fps();
-	} catch(e) {
-		console.warn(e);
-		console.warn('Wiping save to fix issue');
-		wipe();
-	}
+	game.update();
+	setElems();
+	updatePrestiges();
+	auto();
+	fps();
 }
 
 function fps() {
