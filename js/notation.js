@@ -102,8 +102,7 @@ N.stn = function(num) {
 	if (x.lt(1e33)) {
 		let n = x.logBase(1e3).floor().mod(11).toNumber();
 		prf = N.PREFIXES.PRIMARY[n]
-	}
-	if (x.lt('e3003')) {
+	} else if (x.lt('e3003')) {
 		let n = x.div(1000).logBase(1e3).floor().mod(10).toNumber();
 		let pt1 = N.PREFIXES.PRIMARY_ALTERNATE[n];
 		let pt2 = N.PREFIXES.SECONDARY[x.div(1000).logBase(1e30).floor().mod(10).toNumber()];
@@ -143,6 +142,15 @@ N.men = function(num) {
 		return N.stn(x);
 	} else {
 		return N.eng(x);
+	}
+}
+
+N.mlg = function(num) {
+	let x = new OmegaNum(num);
+	if (x.lt(1e15)) {
+		return N.stn(x);
+	} else {
+		return N.log(x);
 	}
 }
 
