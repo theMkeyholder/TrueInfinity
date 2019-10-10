@@ -4,10 +4,14 @@
 
 ### α1.4.2
 * Fix bug I made in α1.4.1
-* Add Discord link
+* New notations:
+		Logarithm Notation
+		Infinity Notation
+		True Infinity Notation
 
 ### α1.4.1
 * Fix bug stopping new player from playing
+* Add Discord link
 
 ### α1.4.0
 * Change to options interface

@@ -244,7 +244,7 @@ class Dimension {
 		this.dim = n(dim || 0).floor();
 		
 		this.loc = oa(loc || [0]);
-		this.str_loc = JSON.stringify(this.loc);
+		this.str_loc = joa(loc || [0]);
 		
 		this.amount = n(amount || 0).floor();
 		this.bought = n(bought || 0).floor();

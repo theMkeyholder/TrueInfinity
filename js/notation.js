@@ -1,5 +1,4 @@
 function f(num) {
-	// return N.sci(num);
 	return N[game.notation](num);
 }
 
@@ -16,11 +15,14 @@ N.PREFIXES.TERTIARY = ['', 'Ce', 'Dn', 'Tc', 'Qe', 'Qu', 'Sc', 'Si', 'Oe', 'Ne']
 	Notations:
 		N.sci - Scientific Notation
 		N.eng - Engineering Notation
-		N.stn - Standard Notation (Prefixes)
+		N.log - Logarithm Notation
+		N.stn - Standard Notation
 		N.uar - Up Arrow Notation
 		N.chn - Chain Arrow Notation
 		N.ban - Bird's Array Notation
 		N.hyp - Hyper E Notation
+		N.inf - Infinity Notation
+		N.tin - True Infinity Notation
 */
 
 N.sci = function(num) {
@@ -70,6 +72,20 @@ N.eng = function(num) {
 		}
 	} else {
 		return num.toString();
+	}
+}
+
+N.log = function(num) {
+	let x = new OmegaNum(num).floor();
+	if (x.gt(1e6)) {
+		let flr = x.log10().mul(100).floor().div(100);
+		if (flr.lt(1e6)) {
+			return 'e' + flr.toString();
+		} else {
+			return 'e' + N.log(flr);
+		}
+	} else {
+		return x.toString();
 	}
 }
 
@@ -259,5 +275,33 @@ N.hyp = function(num) {
 		}
 	} else {
 		return num.toString();
+	}
+}
+
+N.inf = function(num) {
+	let x = new OmegaNum(num).floor();
+	if (x.gt(1e6)) {
+		let flr = x.logBase(1.79e308).mul(1000).floor().div(1000);
+		if (flr.lt(1e6)) {
+			return flr.toNumber().toFixed(3) + '&infin;';
+		} else {
+			return N.inf(flr) + '&infin;';
+		}
+	} else {
+		return N.sci(x);;
+	}
+}
+
+N.tin = function(num) {
+	let x = new OmegaNum(num).floor();
+	if (x.gt('ee310')) {
+		let flr = x.logBase(1.79e308).logBase(1.79e308).mul(1000).floor().div(1000);
+		if (flr.lt('ee311')) {
+			return N.inf(flr) + '&Omega;';
+		} else {
+			return N.tin(flr) + '&Omega;';
+		}
+	} else {
+		return N.inf(x);
 	}
 }

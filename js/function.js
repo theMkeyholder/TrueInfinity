@@ -182,6 +182,52 @@ function prestige(loc) {
 	}
 }
 
+function getGainFor(loc) {
+	loc = oa(loc);
+	let gain = n(0);
+	if (loc[0].eq(0)) {
+		let x = [n(0), loc[1].sub(1)];
+		if (x[1].eq(0)) {
+			x.pop();
+		}
+		if (game.prestige[j(x)]) {
+			for (let i in game.prestige) {
+				let pt = game.prestige[i].loc;
+				if (typeof pt[1] == 'object') {
+					if (pt[1].eq(x[1]) && pt[0].gt(x[0])) {
+						x = oa(pt);
+					}
+				} else if (typeof x[1] == 'undefined'){
+					if (pt[0].gt(x[0])) {
+						x = oa(pt);
+					}
+				}
+			}
+			gain = getPrestigeGain(x[0]);
+		} else {
+			for (let i in game.prestige) {
+				let pt = game.prestige[i].loc;
+				if (pt.length == 1) {
+					if (pt[0].gt(x[0])) {
+						x = oa(pt);
+					}
+				}
+			}
+			gain = getPrestigeGain2(x[0], loc[1]);
+		}
+	} else {
+		let x = loc;
+		x[0] = x[0].sub(1);
+		if (game.prestige[j(x)]) {
+			gain = getPrestigeGain(game.prestige[j(x)].points);
+		} else {
+			x[0] = n(0);
+			gain = getPrestigeGain2(game.prestige[j(x)].points, loc[0].sub(x[0]))
+		}
+	}
+	return f(gain);
+}
+
 function cmpLayer(loc1, loc2) {
 	if (loc1.length > loc2.length) return 1;
 	if (loc1.length < loc2.length) return -1;
