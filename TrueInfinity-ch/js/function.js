@@ -84,7 +84,7 @@ function toggleSB() {
 		setTimeout(() => document.getElementById('mt4').innerHTML = '自', 200);
 	}
 	if (document.getElementById('credit').innerHTML == '') {
-		setTimeout(() => document.getElementById('credit').innerHTML = '鎖符號由<a href=\'https://www.flaticon.com/authors/smashicons\'>Smashicons</a>製造，從<a href=\'https://www.flaticon.com\'>www.flaticon.com</a><br>Favicon由<a href="https://www.flaticon.com/authors/freepik">Freepik</a>製造，從<a href="https://www.flaticon.com/">www.flaticon.com</a>', 300);
+		setTimeout(() => document.getElementById('credit').innerHTML = '鎖符號由<a href=\'https://www.flaticon.com/authors/smashicons\'>Smashicons</a>製造，從<a href=\'https://www.flaticon.com\'>www.flaticon.com</a><br>Favicon由<a href="https://www.flaticon.com/authors/freepik">Freepik</a>製造，從<a href="https://www.flaticon.com/">www.flaticon.com</a><br>回到<a href="https://reinhardt-c.github.io/TrueInfinity/">英文版本</a>', 300);
 	} else {
 		setTimeout(() => document.getElementById('credit').innerHTML = '', 200);
 	}
