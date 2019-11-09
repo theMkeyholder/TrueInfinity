@@ -1,6 +1,6 @@
 // Chuck your data into the depths of the localStorage variable...
 function save() {
-	localStorage.setItem('save', btoa(JSON.stringify(game)));
+	localStorage.setItem('infchsave', btoa(JSON.stringify(game)));
 	if (game.as) {
 		setTimeout(save, game.asintv * 1000);
 	}
@@ -25,13 +25,13 @@ function wipe(nc) {
 
 // Retrieve your data from the depths of the localStorage variable...
 function load() {
-	if (localStorage.getItem('save') != undefined && localStorage.getItem('save') != 'undefined' && localStorage.getItem('save') != null) {
+	if (localStorage.getItem('infchsave') != undefined && localStorage.getItem('infchsave') != 'undefined' && localStorage.getItem('infchsave') != null) {
 		clearAll();
 		try {
-			game = new Game(JSON.parse(atob(localStorage.getItem('save'))));
+			game = new Game(JSON.parse(atob(localStorage.getItem('infchsave'))));
 		} catch(e) {
 			console.warn('Outdated save, updating');
-			game = new Game(JSON.parse(localStorage.getItem('save')));
+			game = new Game(JSON.parse(localStorage.getItem('infchsave')));
 		}
 		save();
 		return true;
