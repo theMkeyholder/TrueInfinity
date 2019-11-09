@@ -84,7 +84,7 @@ function toggleSB() {
 		setTimeout(() => document.getElementById('mt4').innerHTML = 'Au', 200);
 	}
 	if (document.getElementById('credit').innerHTML == '') {
-		setTimeout(() => document.getElementById('credit').innerHTML = 'Lock icon made by <a href=\'https://www.flaticon.com/authors/smashicons\'>Smashicons</a> from <a href=\'https://www.flaticon.com\'>www.flaticon.com</a><br>Favicon made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com/">www.flaticon.com</a><br><a href="https://reinhardt-c.github.io/TrueInfinity/TrueInfinity-ch/">Chinese Version</a> by ItMarki, 300);
+		setTimeout(() => document.getElementById('credit').innerHTML = 'Lock icon made by <a href=\'https://www.flaticon.com/authors/smashicons\'>Smashicons</a> from <a href=\'https://www.flaticon.com\'>www.flaticon.com</a><br>Favicon made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com/">www.flaticon.com</a><br><a href="https://reinhardt-c.github.io/TrueInfinity/TrueInfinity-ch/">Chinese Version</a> by ItMarki', 300);
 	} else {
 		setTimeout(() => document.getElementById('credit').innerHTML = '', 200);
 	}
