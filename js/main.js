@@ -119,6 +119,7 @@ function firstTime() {
 }
 
 function loop() {
+	if (game.notation == "tin") game.notation = "hyp"
 	game.update();
 	setElems();
 	updatePrestiges();

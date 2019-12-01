@@ -2,7 +2,10 @@
 
 ## β0.0
 
-### β0.9.2
+### β0.9.2.1 Hotfix 2019-12-1
+* Disabled True Infinity notation as it breaks the game currently
+
+### β0.9.2 2019-12-1
 * Nyan cat has entered the battlefield
 * A bunch of algorithm :tm: improvements
 * Add prestige layer unfunity
