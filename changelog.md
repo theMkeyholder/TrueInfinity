@@ -2,6 +2,11 @@
 
 ## β0.0
 
+### β0.9.2
+* Nyan cat has entered the battlefield
+* A bunch of algorithm :tm: improvements
+* Add prestige layer unfunity
+
 ### β0.9.1
 * Add untested prestige code
 
