@@ -372,14 +372,12 @@ class Dimension {
 			let ma = this.max_afford || n(0);
 			let mp = this.max_price || n(0);
 			
-			if (ma.lt(1e6)) {
 				this.amount = this.amount.add(ma);
 				this.bought = this.bought.add(ma);
 				
 				game.prestige[this.str_loc].subPoints(mp);
 				
 				return true;
-			}
 		}
 		return false;
 	}
