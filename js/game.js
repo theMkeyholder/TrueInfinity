@@ -179,6 +179,7 @@ class Layer {
 	}
 	
 	subPoints(n) {
+		if (this.points.eq(n) && n.gte(Math.pow(2, 63) - 1)) return
 		this.points = OmegaNum.sub(this.points, n);
 	}
 	
@@ -244,39 +245,23 @@ class Layer {
 		if (this.maxAllCooldown == 0) {
 			if (this.dims.length >= 3 && this.dims[this.dims.length - 1].dim.gte(10)) {
 				let x = this.dims[2].dim;
-				let val = x.pow(1.1);
-				if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
-					this.dims.push(new Dimension(val, this.loc, 1, 1));
-				} else {
-					let val = x.mul(1.1);
-					if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
-						this.dims.push(new Dimension(val, this.loc, 1, 1));
-					} else {
-						let val = x.add(1000);
-						if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
-							this.dims.push(new Dimension(val, this.loc, 1, 1));
-						} else {
-							let val = x.add(100);
-							if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
-								this.dims.push(new Dimension(val, this.loc, 1, 1));
-							} else {
-								let val = x.add(10);
-								if (this.dims[1].dim.gt(15) && new Dimension(val, this.loc, 0, 0).afford) {
-									this.dims.push(new Dimension(val, this.loc, 1, 1));
-								} else {
+				let vals = [x.pow(1.1), x.mul(1.1), x.add(1000), x.add(100), x.add(10), x.add(1)]
+				for (let i = 0; i <= vals.length; i++) {
+					if (i == vals.length) {
 									for (let d of this.dims) {
 										d.buy();
 										d.buyMax();
 									}
+					} else if (this.dims[1].dim.gt(15) && new Dimension(vals[i], this.loc, 0, 0).afford) {
+						this.dims.push(new Dimension(vals[i], this.loc, 1, 1));
+						i = vals.length
 								}
 							}
-						}
-					}
-				}
-			}
+			} else {
 			for (let d of this.dims) {
-				d.buyMax();
 				d.buy();
+					d.buyMax();
+				}
 			}
 			this.maxAllCooldown = 3;
 		}
@@ -355,7 +340,7 @@ class Dimension {
 	
 	get max_afford() {
 		if (this.dim.gt(100)) {
-			return new OmegaNum(1);
+			return new OmegaNum(this.afford ? 1 : 0);
 		}
 		if (game.prestige[this.str_loc].points.isint() && this.price_start.isint() &&  this.bought.isint()){
 			return OmegaNum.affordGeometricSeries(game.prestige[this.str_loc].points.floor(), this.price_start.floor(), OmegaNum.pow(this.dim.lt(25) ? 10 : this.dim.mul(0.9).floor(), this.dim.add(1)).floor(), this.bought.floor());
