@@ -360,6 +360,7 @@ const NAMES = [
 	'severity', 
 	'fatality', 
 	'insanity', 
+	'unfunity',
 	'calamity', 
 	'futility', 
 	'finality', 
@@ -564,7 +565,12 @@ function bulkPrestige() {
 			let gain = n(10).pow(getPrestigeGain2(p, m.add(1).floor().sub(m)));
 			game.prestige[j([m.add(1).floor()])] = new Layer([m.add(1).floor()], gain.mul(10), pow);
 			game.max_layer = [m.add(1).floor()];
-		}}}}}}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

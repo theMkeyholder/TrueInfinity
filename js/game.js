@@ -245,7 +245,7 @@ class Layer {
 		if (this.maxAllCooldown == 0) {
 			if (this.dims.length >= 3 && this.dims[this.dims.length - 1].dim.gte(10)) {
 				let x = this.dims[2].dim;
-				let vals = [x.pow(1.1), x.mul(1.1), x.add(1000), x.add(100), x.add(10), x.add(1)]
+				let vals = [x.pow(10), x.pow(2), x.pow(1.5), x.pow(1.1), x.mul(1.1), x.add(1000), x.add(100), x.add(10), x.add(1)]
 				for (let i = 0; i <= vals.length; i++) {
 					if (i == vals.length) {
 									for (let d of this.dims) {
