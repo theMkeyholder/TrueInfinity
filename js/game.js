@@ -248,18 +248,20 @@ class Layer {
 				let vals = [x.pow(10), x.pow(2), x.pow(1.5), x.pow(1.1), x.mul(1.1), x.add(1000), x.add(100), x.add(10), x.add(1)]
 				for (let i = 0; i <= vals.length; i++) {
 					if (i == vals.length) {
-									for (let d of this.dims) {
-										d.buy();
-										d.buyMax();
-									}
+						var rd = this.dims.slice(0).reverse();
+						for (let d of rd) {
+							d.buy();
+							d.buyMax();
+						}
 					} else if (this.dims[1].dim.gt(15) && new Dimension(vals[i], this.loc, 0, 0).afford) {
 						this.dims.push(new Dimension(vals[i], this.loc, 1, 1));
-						i = vals.length
-								}
-							}
+						i = vals.length;
+					}
+				}
 			} else {
-			for (let d of this.dims) {
-				d.buy();
+				var rd = this.dims.slice(0).reverse();
+				for (let d of rd) {
+					d.buy();
 					d.buyMax();
 				}
 			}

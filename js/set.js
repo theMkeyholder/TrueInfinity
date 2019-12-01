@@ -99,7 +99,7 @@ function setElems() {
 					document.getElementById('buybulkauto').className = document.getElementById('buybulkauto').className.replace('green', 'red').replace('blue', 'red');
 				}
 			}
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 6; i++) {
 				if (game.bulk_level > i) {
 					document.getElementById('ll' + i).className = document.getElementById('ll' + i).className.replace('red', 'green');
 				} else {

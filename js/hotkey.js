@@ -18,5 +18,6 @@ H[77] = function() {
 }
 
 H[80] = function() {
-	if (document.getElementById("pb"+JSON.stringify(game.max_layer))) document.getElementById("pb"+JSON.stringify(game.max_layer)).click()
+  var d=document.getElementById("pb"+JSON.stringify(game.max_layer));
+	if (d) d.click();
 }

@@ -205,7 +205,9 @@ N.eng = function(num) {
 
 N.log = function(num) {
   let x = new OmegaNum(num).floor();
-  if (x.gt(1e6)) {
+  if (x.gt("10^^12")){
+    return x.toString();
+  } else if (x.gt(1e6)) {
     let flr = x.log10().mul(100).floor().div(100);
     if (flr.lt(1e6)) {
       return 'e' + flr.toString();
@@ -708,7 +710,9 @@ N.hyp = function(num) {
 
 N.inf = function(num) {
   let x = new OmegaNum(num).floor();
-  if (x.gt(1e6)) {
+  if (x.gt("10^^12")){
+    return x.toString();
+  } else if (x.gt(1e6)) {
     let flr = x.logBase(1.79e308).mul(1000).floor().div(1000);
     if (flr.lt(1e6)) {
       return flr.toNumber().toFixed(3) + '&infin;';
@@ -722,7 +726,9 @@ N.inf = function(num) {
 
 N.tin = function(num) {
   let x = new OmegaNum(num).floor();
-  if (x.gt('ee310')) {
+  if (x.gt("10^^24")){
+    return x.toString();
+  } else if (x.gt('ee310')) {
     let flr = x.logBase(1.79e308).logBase(1.79e308).mul(1000).floor().div(1000);
     if (flr.lt('ee311')) {
       return N.inf(flr) + '&Omega;';
