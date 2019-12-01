@@ -1,8 +1,11 @@
 # β
 
-## β1.0
+## β0.0
 
-### β1.0.0
+### β0.9.1
+* Add untested prestige code
+
+### β0.9.0
 * Huge performance upgrade
 * Dimensions above ten now 'collapse' instantly like prestige layers
 * Hotkey M: Max all on all layers
